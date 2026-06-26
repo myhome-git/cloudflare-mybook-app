@@ -1,0 +1,30 @@
+[
+    {
+        "path": "/app",
+        "name": "前台",
+        "source": "/app/Home.vue",
+        "redirect": "/app/novel/list",
+        "children": [
+            {
+                "path": "/welcome",
+                "name": "首页",
+                "source": "/app/Welcome.vue"
+            },
+            {
+                "path": "/novel/list",
+                "name": "小说列表",
+                "source": "/app/novel/NovelList.vue"
+            },
+            {
+                "path": "/novel/:id",
+                "name": "小说详情",
+                "source": "/app/novel/NovelDetail.vue"
+            },
+            {
+                "path": "/read/:id",
+                "name": "小说阅读",
+                "source": "/app/novel/NovelReader.vue"
+            }
+        ]
+    }
+]
