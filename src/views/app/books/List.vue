@@ -10,6 +10,7 @@
       >
         <span class="novel-list-dot">•</span>
         <div class="novel-list-content">
+          <span class="novel-list-title">{{ novel.row_num }}</span>
           <span class="novel-list-title">{{ novel.title }}</span>
           <span class="novel-list-author" v-if="novel.author">作者：{{ novel.author }}</span>
           <span class="novel-list-chapters">共{{ novel.total_chapters || 0 }}章</span>
@@ -56,7 +57,7 @@ const props = withDefaults(defineProps<{
 
 // 处理列表项点击事件
 const handleItemClickDetail = (novel: any) => {
-    handleItemClick({ id: novel.id, folder: novel.folder, folder_index: novel.folder_index }, `/app/novel/detail`, router, false, false);
+  handleItemClick({ id: novel.id, folder: novel.folder, folder_index: novel.folder_index }, `/app/books/detail`, router, false, false);
 };
 
 // 计算属性，用于处理 dataSource
@@ -87,10 +88,10 @@ const onChange = (current: number, pageSize: number) => {
 
 /* 小说列表 - Markdown 风格 */
 .novel-list {
-  background: #fff;
+  background-color: #fff;
   border-radius: 6px;
   padding: 8px 0;
-  border: 1px solid #d0d7de;
+  border: 1px solid #eee;
 }
 
 .novel-list-item {

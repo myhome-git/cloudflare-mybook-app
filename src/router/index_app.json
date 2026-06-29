@@ -3,7 +3,7 @@
         "path": "/app",
         "name": "前台",
         "source": "/app/Home.vue",
-        "redirect": "/app/novel/index",
+        "redirect": "/app/books/index",
         "children": [
             {
                 "path": "/welcome",
@@ -11,19 +11,19 @@
                 "source": "/app/Welcome.vue"
             },
             {
-                "path": "/novel/index",
+                "path": "/books/index",
                 "name": "小说列表",
-                "source": "/app/novel/NovelIndex.vue"
+                "source": "/app/books/Index.vue"
             },
             {
-                "path": "/novel/detail",
+                "path": "/books/detail",
                 "name": "小说详情",
-                "source": "/app/novel/NovelDetail.vue"
+                "source": "/app/books/Detail.vue"
             },
             {
-                "path": "/read/:id",
+                "path": "/books/read",
                 "name": "小说阅读",
-                "source": "/app/novel/NovelReader.vue"
+                "source": "/app/books/Reader.vue"
             }
         ]
     }

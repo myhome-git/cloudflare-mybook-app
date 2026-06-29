@@ -7,8 +7,8 @@
             <template v-else>
                 <a-alert :message="`${seMessage}`" type="success" show-icon closable />
                 <div style="height: 10px;"></div>
-                <NovelList :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
-                </NovelList>
+                <List :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
+                </List>
             </template>
         </template>
         <template v-else>
@@ -16,8 +16,8 @@
                 <a-alert :message="`暂无数据！`" type="warning" show-icon closable></a-alert>
             </template>
             <template v-else>
-                <NovelList :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
-                </NovelList>
+                <List :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
+                </List>
             </template>
         </template>
     </template>
@@ -36,7 +36,7 @@ import { useRoute, useRouter } from 'vue-router';
 // @ts-ignore
 import request from "@/utils/request.js";
 import { isValidValue, handleItemClick } from "@/utils/utils.js";
-import NovelList from './NovelList.vue';
+import List from './List.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -45,7 +45,7 @@ const router = useRouter();
 const apiURL = `/api/app/books/list`;
 const dataSource = ref([]);
 const pagination = ref({
-    size: 50,
+    size: 30,
     index: 1,
     total: 0
 });
@@ -102,7 +102,7 @@ const onPageChange = (index: number, size: number) => {
     handleItemClick({
         index: value.index.toString(),
         size: value.size.toString()
-    }, '/app/novel/index', router)
+    }, '/app/books/index', router)
     // handleGetList();
 };
 
@@ -151,20 +151,13 @@ watch(route, (to, from) => {
     // 从 URL 参数中读取分页信息
     let index = to.query.index as string;
     let size = to.query.size as string;
-    let classId = to.query.classId as string;
 
     // 如果 URL 参数不存在，则使用默认值
-    if (!isValidValue(index)) {
-        index = `1`;
+    if (isValidValue(index)) {
+      pagination.value.index = parseInt(index, 10);
     }
-    if (!isValidValue(size)) {
-        size = `10`;
-    }
-    if (index) {
-        pagination.value.index = parseInt(index, 10);
-    }
-    if (size) {
-        pagination.value.size = parseInt(size, 10);
+    if (isValidValue(size)) {
+       pagination.value.size = parseInt(size, 10);
     }
 
     // 重新获取数据

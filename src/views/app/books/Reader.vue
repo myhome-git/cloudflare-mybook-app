@@ -3,34 +3,33 @@
     <!-- 阅读器顶部导航 -->
     <div class="reader-header" :class="{ 'header-scrolled': isScrolled }">
       <div class="header-content">
-        <a-button type="text" size="large" @click="goBack">
-          <i class="iconfont icon-arrow-left"></i>
+        <a-button size="large" @click="goBack">
+          <ArrowLeftOutlined />返回
         </a-button>
-        <span class="reader-title">{{ currentChapterTitle }}</span>
         <div class="header-actions">
           <!-- 主题切换 -->
           <a-dropdown :trigger="['click']">
-            <a-button type="text" size="large">
-              <i class="iconfont icon-settings"></i>
+            <a-button size="large">
+              <SettingOutlined />主题切换
             </a-button>
             <template #overlay>
               <a-menu @click="handleSettingChange">
                 <a-menu-item key="light">
-                  <i class="iconfont icon-sun"></i> 浅色
+                  <HomeOutlined /> 浅色
                 </a-menu-item>
                 <a-menu-item key="sepia">
-                  <i class="iconfont icon-moon"></i> 护眼
+                  <CloudOutlined /> 护眼
                 </a-menu-item>
                 <a-menu-item key="dark">
-                  <i class="iconfont icon-moon-fill"></i> 深色
+                  <ThunderboltOutlined /> 深色
                 </a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
           <!-- 字体大小 -->
           <a-dropdown :trigger="['click']">
-            <a-button type="text" size="large">
-              <i class="iconfont icon-text"></i> {{ readerSettings.fontSize }}%
+            <a-button size="large">
+              字体大小 {{ readerSettings.fontSize }}%
             </a-button>
             <template #overlay>
               <a-menu @click="handleFontSizeChange">
@@ -65,41 +64,15 @@
             class="chapter-nav-btn"
             @click="goToChapter(prevChapterId)"
           >
-            <i class="iconfont icon-arrow-left"></i> 上一章
+            <ArrowLeftOutlined /> 上一章
           </button>
           <button 
             v-if="nextChapterId" 
             class="chapter-nav-btn"
             @click="goToChapter(nextChapterId)"
           >
-            下一章 <i class="iconfont icon-arrow-right"></i>
+            下一章 <ArrowRightOutlined />
           </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 底部目录按钮 -->
-    <button class="catalog-toggle" @click="showCatalog = !showCatalog">
-      <i class="iconfont icon-list"></i>
-      目录
-    </button>
-
-    <!-- 目录面板 -->
-    <div v-show="showCatalog" class="catalog-panel">
-      <div class="catalog-header">
-        <h3>章节目录</h3>
-        <a-button type="text" size="small" @click="showCatalog = false">
-          <i class="iconfont icon-close"></i>
-        </a-button>
-      </div>
-      <div class="catalog-list">
-        <div 
-          v-for="chapter in catalogChapters" 
-          :key="chapter.id"
-          :class="['catalog-item', { active: currentChapterId === chapter.id }]"
-          @click="goToChapter(chapter.id)"
-        >
-          {{ chapter.name }}
         </div>
       </div>
     </div>
@@ -109,7 +82,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { mockChapters } from './mock-data';
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  SettingOutlined,
+  HomeOutlined,
+  CloudOutlined,
+  ThunderboltOutlined
+} from '@ant-design/icons-vue';
+// @ts-ignore
+import request from "@/utils/request.js";
+import { isValidValue, handleItemClick } from "@/utils/utils.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -158,56 +141,140 @@ const renderContent = (content: string) => {
     .join('');
 };
 
-// 获取章节数据
-const fetchChapterData = async () => {
-  loading.value = true;
-  try {
-    // 使用模拟数据
-    const chapterId = route.params.id as string;
-    
-    // 查找对应章节
-    const chapter = mockChapters.find(c => c.id === chapterId);
-    
-    if (chapter) {
-      currentChapterId.value = chapter.id;
-      currentChapterTitle.value = chapter.name;
-      currentContent.value = chapter.content;
-      chapterWordCount.value = chapter.content.length;
-    } else {
-      // 如果没有找到，使用默认章节
-      currentChapterId.value = 'c1';
-      currentChapterTitle.value = '第一章 秦羽';
-      currentContent.value = mockChapters[0]?.content || '# 暂无内容';
-      chapterWordCount.value = 500;
-    }
+// 参数
+const fileURL = ref(``)
+const folder = ref(``)
+const folder_index = ref(``)
+const chapterId = ref(``)
 
-    // 生成章节列表
-    chapters.value = [
-      { id: 'c1', name: '第一章 秦羽' },
-      { id: 'c2', name: '第二章 神秘石碑' },
-      { id: 'c3', name: '第三章 奇遇' },
-      { id: 'c4', name: '第四章 修炼之路' },
-      { id: 'c5', name: '第五章 家族试炼' },
-      { id: 'c6', name: '第六章 初入宗门' },
-      { id: 'c7', name: '第七章 同门比试' },
-      { id: 'c8', name: '第八章 秘境探险' },
-      { id: 'c9', name: '第九章 突破瓶颈' },
-      { id: 'c10', name: '第十章 新的征程' }
-    ];
+// 数据源
+const apiURL = `/api/app/books/detail`;
+const isServerResult = ref({
+    status: 0,
+    message: ''
+});
 
-    // 查找前后章节
-    const currentIndex = chapters.value.findIndex(c => c.id === currentChapterId.value);
-    if (currentIndex > 0) {
-      prevChapterId.value = chapters.value[currentIndex - 1].id;
+const handleGetURL = () => {
+    let sendParams = Object.assign({});
+    request({
+        url: `${apiURL}`,
+        params: sendParams
+    }).then((data: any) => {
+        const result = data.result;
+        fileURL.value = result.url;
+        handleGetBookChapters();
+    }).catch((err: any) => {
+        
+    }).finally(() => {
+
+    });
+};
+
+const handleGetBookChapters = async () => {
+    const isServerResultValue = isServerResult.value;
+    isServerResultValue.status = 0;
+    isServerResultValue.message = 'Loading...';
+    try {
+        // 先获取章节目录列表
+        const catalogUrl = [fileURL.value, folder.value, folder_index.value].join('/');
+        const catalogResponse = await fetch(catalogUrl);
+        
+        if (!catalogResponse.ok) {
+            throw new Error(`Failed to fetch catalog: ${catalogResponse.status}`);
+        }
+        
+        const catalogData = await catalogResponse.json();
+        
+        // 清空并填充章节列表
+        chapters.value = [];
+        catalogData.chapters.forEach((chapter: any) => {
+            chapters.value.push({
+                id: chapter.file,
+                name: chapter.title || chapter.name || `第${chapter.file}章`
+            });
+        });
+        
+        // 查找当前章节在列表中的位置
+        const currentIndex = chapters.value.findIndex((ch: any) => ch.id === chapterId.value);
+        
+        // 设置前后章节
+        if (currentIndex > 0) {
+            prevChapterId.value = chapters.value[currentIndex - 1].id;
+        } else {
+            prevChapterId.value = '';
+        }
+        
+        if (currentIndex < chapters.value.length - 1) {
+            nextChapterId.value = chapters.value[currentIndex + 1].id;
+        } else {
+            nextChapterId.value = '';
+        }
+        
+        // 再获取当前章节内容
+        const chapterUrl = [fileURL.value, folder.value, `${chapterId.value}.txt.gz`].join('/');
+        const chapterResponse = await fetch(chapterUrl);
+        
+        if (!chapterResponse.ok) {
+            throw new Error(`Failed to fetch chapter content: ${chapterResponse.status}`);
+        }
+        
+        const content = await decompressGzip(chapterResponse);
+        
+        isServerResultValue.status = 200;
+        currentContent.value = content;
+        currentChapterTitle.value = chapters.value[currentIndex]?.name || `第${chapterId.value}章`;
+        chapterWordCount.value = content.length;
+    } catch (err: any) {
+        console.error('Error loading chapter:', err);
+        isServerResultValue.status = 500;
+        isServerResultValue.message = `Error：${err.message}`;
+    } finally {
+        isServerResultValue.message = isServerResultValue.status === 200 ? '加载完成' : isServerResultValue.message;
     }
-    if (currentIndex < chapters.value.length - 1) {
-      nextChapterId.value = chapters.value[currentIndex + 1].id;
+};
+
+// gzip 解压函数
+const decompressGzip = async (response: Response): Promise<string> => {
+    try {
+        // 使用 arrayBuffer 获取响应数据
+        const arrayBuffer = await response.arrayBuffer();
+        const compressedData = new Uint8Array(arrayBuffer);
+        
+        // 使用 DecompressionStream 解压 gzip
+        const decompressedStream = new DecompressionStream('gzip');
+        const writer = decompressedStream.writable.getWriter();
+        
+        // 写入压缩数据并关闭
+        writer.write(compressedData);
+        writer.close();
+        
+        // 读取解压后的数据
+        const reader = decompressedStream.readable.getReader();
+        const resultChunks: Uint8Array[] = [];
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            if (value) {
+                resultChunks.push(value);
+            }
+        }
+        
+        // 合并结果
+        const resultTotalLength = resultChunks.reduce((acc, chunk) => acc + chunk.length, 0);
+        const resultMerged = new Uint8Array(resultTotalLength);
+        let resultOffset = 0;
+        for (const chunk of resultChunks) {
+            resultMerged.set(chunk, resultOffset);
+            resultOffset += chunk.length;
+        }
+        
+        // 转换为字符串
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(resultMerged);
+    } catch (error) {
+        console.error('Decompression error:', error);
+        throw error;
     }
-  } catch (error) {
-    console.error('获取章节数据失败:', error);
-  } finally {
-    loading.value = false;
-  }
 };
 
 // 返回上一页
@@ -216,8 +283,8 @@ const goBack = () => {
 };
 
 // 跳转到章节
-const goToChapter = (chapterId: string) => {
-  router.push(`/app/read/${chapterId}`);
+const goToChapter = (id: string) => {
+  handleItemClick({ folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
   window.scrollTo(0, 0);
 };
 
@@ -237,16 +304,24 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  fetchChapterData();
   window.addEventListener('scroll', handleScroll);
+  folder.value = `${route.query.folder}`;
+  folder_index.value = `${route.query.folder_index}`;
+  chapterId.value = `${route.query.id}`;
+  handleGetURL()
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
-watch(() => route.params.id, () => {
-  fetchChapterData();
+// 监听章节 ID 变化，重新加载内容
+watch(() => route.query.id, async (newId) => {
+  if (newId) {
+    chapterId.value = String(newId);
+    // 回到顶部
+    location.reload()
+  }
 });
 </script>
 
@@ -314,6 +389,7 @@ watch(() => route.params.id, () => {
 /* 阅读区域 */
 .reading-area {
   padding: 20px;
+  font-size: 20px;
 }
 
 .chapter-info {
@@ -383,94 +459,6 @@ watch(() => route.params.id, () => {
   border-color: #3f3f3f;
 }
 
-/* 目录切换按钮 */
-.catalog-toggle {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 16px 24px;
-  background: #3f3f3f;
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 90;
-}
-
-.catalog-toggle:hover {
-  background: #555;
-  transform: scale(1.05);
-}
-
-/* 目录面板 */
-.catalog-panel {
-  position: fixed;
-  top: 0;
-  right: -320px;
-  width: 320px;
-  height: 100vh;
-  background: #fff;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
-  transition: right 0.3s;
-  z-index: 150;
-  display: flex;
-  flex-direction: column;
-}
-
-.catalog-panel.show {
-  right: 0;
-}
-
-.catalog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.catalog-header h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.catalog-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-}
-
-.catalog-item {
-  padding: 12px 16px;
-  background: #f9f9f9;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 14px;
-  color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 8px;
-}
-
-.catalog-item:hover {
-  background: #e8e7e3;
-  color: #333;
-}
-
-.catalog-item.active {
-  background: #3f3f3f;
-  color: #fff;
-}
-
 /* ==================== 
    平板设备响应式样式 (768px - 991px)
    ==================== */
@@ -517,26 +505,6 @@ watch(() => route.params.id, () => {
 
   .chapter-nav-btn {
     padding: 10px 20px;
-    font-size: 13px;
-  }
-
-  .catalog-toggle {
-    bottom: 25px;
-    right: 25px;
-    padding: 14px 22px;
-    font-size: 13px;
-  }
-
-  .catalog-panel {
-    width: 280px;
-  }
-
-  .catalog-header h3 {
-    font-size: 17px;
-  }
-
-  .catalog-item {
-    padding: 11px 15px;
     font-size: 13px;
   }
 }
@@ -641,41 +609,6 @@ watch(() => route.params.id, () => {
     align-items: center;
     justify-content: center;
   }
-
-  /* 目录切换按钮优化 */
-  .catalog-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 20px;
-    font-size: 13px;
-    z-index: 90;
-  }
-
-  /* 目录面板优化 */
-  .catalog-panel {
-    width: 100%;
-    right: -100%;
-    max-width: none;
-  }
-
-  .catalog-header {
-    padding: 14px 16px;
-  }
-
-  .catalog-header h3 {
-    font-size: 16px;
-  }
-
-  .catalog-list {
-    padding: 14px;
-  }
-
-  .catalog-item {
-    padding: 10px 14px;
-    font-size: 14px;
-    margin-bottom: 6px;
-  }
 }
 
 /* ==================== 
@@ -750,37 +683,6 @@ watch(() => route.params.id, () => {
   .chapter-nav-btn {
     padding: 9px 16px;
     font-size: 12px;
-  }
-
-  /* 目录切换按钮优化 */
-  .catalog-toggle {
-    bottom: 15px;
-    right: 15px;
-    padding: 10px 18px;
-    font-size: 12px;
-  }
-
-  /* 目录面板优化 */
-  .catalog-panel {
-    width: 100%;
-  }
-
-  .catalog-header {
-    padding: 12px 14px;
-  }
-
-  .catalog-header h3 {
-    font-size: 15px;
-  }
-
-  .catalog-list {
-    padding: 12px;
-  }
-
-  .catalog-item {
-    padding: 9px 12px;
-    font-size: 13px;
-    margin-bottom: 5px;
   }
 }
 </style>

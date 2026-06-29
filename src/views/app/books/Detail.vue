@@ -20,15 +20,15 @@
             <div class="novel-stats">
               <span class="stat-item">
                 <i class="iconfont icon-chapter"></i>
-                {{ novelData.chapterCount || 0 }}章
+                {{ novelData.total_chapters || 0 }}章
               </span>
               <span class="stat-item">
                 <i class="iconfont icon-eye"></i>
-                {{ novelData.readCount || 0 }}阅读
+                {{ novelData.read_count || 0 }}阅读
               </span>
               <span class="stat-item">
                 <i class="iconfont icon-clock"></i>
-                更新于{{ novelData.updateTime }}
+                更新于{{ novelData.update_time }}
               </span>
             </div>
             <p class="novel-desc-large">{{ novelData.description || '暂无简介' }}</p>
@@ -53,28 +53,17 @@
             <i class="iconfont icon-list"></i>
             章节目录
           </h2>
-          <a-input-search
-            v-model:value="searchChapter"
-            placeholder="搜索章节..."
-            allow-clear
-            style="width: 250px;"
-            @search="filterChapters"
-          >
-            <template #prefix>
-              <i class="iconfont icon-search"></i>
-            </template>
-          </a-input-search>
         </div>
         
         <!-- 目录列表 - 响应式 -->
         <div class="catalog-grid">
           <div 
-            v-for="chapter in filteredChapters" 
+            v-for="chapter in chapters" 
             :key="chapter.id"
             :class="['chapter-item', { active: currentChapterId === chapter.id }]"
             @click="goToChapter(chapter.id)"
           >
-            {{ chapter.name }}
+            {{ chapter.title }}
           </div>
         </div>
       </div>
@@ -98,9 +87,12 @@ import { isValidValue, handleItemClick } from "@/utils/utils.js";
 const router = useRouter();
 const route = useRoute();
 
+// 参数
+const folder = ref(``)
+const folder_index = ref(``)
+
 // 数据源
 const apiURL = `/api/app/books/detail`;
-const dataSource = ref([]);
 const isServerResult = ref({
     status: 0,
     message: ''
@@ -134,12 +126,12 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
         params: sendParams
     }).then((data: any) => {
         isServerResultValue.status = 200;
-        const result = data.result;
-        const value = dataSource.value;
-        value.splice(0, value.length);
-        result.forEach((element: any) => {
-            // @ts-ignore
-            value.push(element);
+        const result = data;
+        novelData.value = result;
+        (result.chapters || []).map((chapter: any) => {
+            chapter.id = chapter.file;
+            chapters.value.push(chapter)
+            return chapter;
         });
     }).catch((err: any) => {
         isServerResultValue.status = 500;
@@ -153,42 +145,25 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
 const novelData = ref<any>(null);
 const chapters = ref<any[]>([]);
 const loading = ref(false);
-const currentPage = ref(1);
-const totalChapters = ref(0);
-const searchChapter = ref('');
 const currentChapterId = ref<string>('c1');
-
-// 过滤后的章节列表
-const filteredChapters = computed(() => {
-  if (!searchChapter.value) {
-    return chapters.value;
-  }
-  return chapters.value.filter((chapter: any) => {
-    const name = chapter.name || chapter.title || '';
-    return name.includes(searchChapter.value);
-  });
-});
-
-// 筛选章节
-const filterChapters = () => {
-  currentPage.value = 1;
-};
 
 // 开始阅读
 const startReading = () => {
   if (chapters.value.length > 0) {
-    goToChapter(chapters.value[0].id);
+    goToChapter(chapters.value[0].file);
   }
 };
 
 // 跳转到章节
 const goToChapter = (id: string) => {
-  handleItemClick({ id: id }, `/app/novel/detail`, router, false, false);
+  handleItemClick({ folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
 };
 
 // 挂载事件
 onMounted(async () => {
     await nextTick(() => {
+        folder.value = `${route.query.folder}`;
+        folder_index.value = `${route.query.folder_index}`;
         handleGetURL();
     });
 });
@@ -329,17 +304,13 @@ onMounted(async () => {
   color: #3f3f3f;
 }
 
-/* 章节目录网格 */
+/* 章节目录列表 */
 .catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-  max-height: 500px;
-  overflow-y: auto;
-  padding: 8px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 8px;
+  overflow-y: auto;
 }
 
 .chapter-item {
@@ -350,9 +321,8 @@ onMounted(async () => {
   transition: all 0.2s;
   font-size: 14px;
   color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
 .chapter-item:hover {
@@ -378,10 +348,6 @@ onMounted(async () => {
 
   .novel-title-large {
     font-size: 24px;
-  }
-
-  .catalog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
@@ -433,11 +399,6 @@ onMounted(async () => {
   .section-header :deep(.ant-input-search) {
     width: 100%;
   }
-
-  .catalog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    max-height: 400px;
-  }
 }
 
 /* ==================== 
@@ -467,10 +428,6 @@ onMounted(async () => {
 
   .catalog-section {
     padding: 24px 20px;
-  }
-
-  .catalog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
@@ -585,30 +542,6 @@ onMounted(async () => {
     width: 100% !important;
   }
 
-  /* 章节目录网格优化 */
-  .catalog-grid {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr;
-    max-height: 400px;
-    gap: 8px;
-  }
-
-  .chapter-item {
-    padding: 12px 14px;
-    font-size: 14px;
-    border-radius: 4px;
-  }
-
-  /* 目录分页优化 */
-  .catalog-pagination {
-    margin-top: 16px;
-  }
-
-  .custom-pagination :deep(.ant-pagination) {
-    font-size: 12px;
-  }
-
   /* 空状态优化 */
   .empty-state {
     height: 300px;
@@ -678,16 +611,6 @@ onMounted(async () => {
 
   .section-title .iconfont {
     font-size: 18px;
-  }
-
-  /* 章节目录网格优化 */
-  .catalog-grid {
-    max-height: 350px;
-  }
-
-  .chapter-item {
-    padding: 10px 12px;
-    font-size: 13px;
   }
 
   /* 空状态优化 */

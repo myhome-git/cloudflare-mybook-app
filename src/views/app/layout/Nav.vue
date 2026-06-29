@@ -1,12 +1,12 @@
 <template>
     <div class="app-nav">
-        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/app/novel/index')">
+        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="router.push({ path: '/app/books/index', query: { index: '1', classId: 'home' } })">
             首页
         </div>
         <template v-if="computedDataSource.length > 0">
             <template v-for="(item, index) of computedDataSource" :key="item.id">
                 <li class="li" :class="{ active: route.query.classId === `${item.id}` }"
-                    @click="handleItemClickWrapper({ classId: item.id }, '/app/novel/list')">
+                    @click="router.push({ path: '/app/books/list', query: { index: '1', classId: item.id } })">
                     <span>{{ item.name }}</span>
                 </li>
             </template>
@@ -23,7 +23,7 @@ const router = useRouter();
 
 // 处理列表项点击事件
 const handleItemClickWrapper = (obj: any, url: string) => {
-    handleItemClick(obj, url, router, false);
+    handleItemClick(obj, url, router, false, false);
 };
 
 // 透传对象属性和方法
