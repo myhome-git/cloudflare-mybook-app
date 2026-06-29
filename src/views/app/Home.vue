@@ -45,55 +45,19 @@ import Footer from './layout/Footer.vue';
 const route = useRoute();
 const router = useRouter();
 
+// 分页
+const pagination = ref({
+    size: 50,
+    index: 1,
+    total: 0
+});
+
 // 搜索
 const inputSearchValue = ref("");
 const onSearch = (value: string) => {
     inputSearchValue.value = value;
-    handleItemClick({ searchText: value }, '/app', router, false)
+    handleItemClick({ searchText: value, ...pagination.value }, '/app', router, false)
 }
-
-// 数据源
-const apiURL = `${SystemConfig.host}/api/app/blogs/query`;
-const dataSourceHot = ref([]);
-const handleGetListHot = () => {
-    let requestParams = Object.assign({}, {
-        size: 10,
-        index: 1,
-        total: 0
-    });
-    Object.assign(requestParams, {
-        searchText: isValidValue(inputSearchValue.value) ? inputSearchValue.value : null,
-        classId: isValidValue(inputSearchValue.value) ? null : (isValidValue(route.query.classId) ? route.query.classId : null)
-    });
-    request({
-        url: `${apiURL}/getBlogClassHot`,
-        params: requestParams
-    }).then((data: any) => {
-        if(!(data instanceof Object) || !(data.result instanceof Array)){
-            return;
-        }
-        const result = data.result;
-        const value = dataSourceHot.value;
-        value.splice(0, value.length);
-        result.forEach((element: any, index: number) => {
-            if (index === 0) {
-                element.color = "pink";
-            } else if (index === 1) {
-                element.color = "orange";
-            } else if (index === 2) {
-                element.color = "green";
-            } else {
-                element.color = "default";
-            }
-            // @ts-ignore
-            element = handleDecodemultiple(element, element.key, ["title"]);
-            // @ts-ignore
-            value.push(element);
-        });
-    }).catch((err: any) => {
-        console.log(err);
-    });
-};
 
 const dataSourceNav = ref([]);
 const handleGetListNav = () => {
@@ -128,14 +92,13 @@ const handleGetListNav = () => {
 onMounted(async () => {
     // 使用 $nextTick 确保 DOM 已经渲染完成
     await nextTick(() => {
-        handleGetListHot();
         handleGetListNav();
     });
 });
 
 // 监听路由变化，重新获取所有数据
 watch(route, (to, from) => {
-    handleGetListHot();
+    // console.log('Route changed:', to.fullPath);
 });
 </script>
 <style scoped>

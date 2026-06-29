@@ -77,17 +77,6 @@
             {{ chapter.name }}
           </div>
         </div>
-
-        <!-- 分页 -->
-        <div v-if="totalChapters > pageSize" class="catalog-pagination">
-          <a-pagination
-            v-model:current="currentPage"
-            v-model:page-size="pageSize"
-            :total="totalChapters"
-            show-size-changer
-            @change="handlePageChange"
-          />
-        </div>
       </div>
     </template>
 
@@ -100,19 +89,71 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { mockNovels, mockChapters, getNovelDetail, getChapters } from './mock-data';
+// @ts-ignore
+import request from "@/utils/request.js";
+import { isValidValue, handleItemClick } from "@/utils/utils.js";
 
 const router = useRouter();
 const route = useRoute();
+
+// 数据源
+const apiURL = `/api/app/books/detail`;
+const dataSource = ref([]);
+const isServerResult = ref({
+    status: 0,
+    message: ''
+});
+
+const handleGetURL = () => {
+    let sendParams = Object.assign({});
+    request({
+        url: `${apiURL}`,
+        params: sendParams
+    }).then((data: any) => {
+        const result = data.result;
+        const value = route.query;
+        const folder = isValidValue(value.folder) ? String(value.folder) : '';
+        const folderIndex = isValidValue(value.folder_index) ? String(value.folder_index) : '';
+        handleGetBookChapters({url: result.url, folder: folder, folder_index: folderIndex});
+    }).catch((err: any) => {
+        
+    }).finally(() => {
+
+    });
+};
+
+const handleGetBookChapters = (options: { url: string; folder: string; folder_index: string }) => {
+    const isServerResultValue = isServerResult.value;
+    isServerResultValue.status = 0;
+    isServerResultValue.message = 'Loading...';
+    let sendParams = Object.assign({});
+    request({
+        url: [options.url, options.folder, options.folder_index].join('/'),
+        params: sendParams
+    }).then((data: any) => {
+        isServerResultValue.status = 200;
+        const result = data.result;
+        const value = dataSource.value;
+        value.splice(0, value.length);
+        result.forEach((element: any) => {
+            // @ts-ignore
+            value.push(element);
+        });
+    }).catch((err: any) => {
+        isServerResultValue.status = 500;
+        isServerResultValue.message = `Error：${err.data.message || err.message}`;
+    }).finally(() => {
+
+    });
+};
 
 // 数据状态
 const novelData = ref<any>(null);
 const chapters = ref<any[]>([]);
 const loading = ref(false);
 const currentPage = ref(1);
-const pageSize = ref(20);
 const totalChapters = ref(0);
 const searchChapter = ref('');
 const currentChapterId = ref<string>('c1');
@@ -128,53 +169,9 @@ const filteredChapters = computed(() => {
   });
 });
 
-// 获取小说详情
-const fetchNovelDetail = async () => {
-  loading.value = true;
-  try {
-    // 使用模拟数据
-    const id = route.params.id as string;
-    const detail = getNovelDetail(id);
-    
-    if (detail) {
-      novelData.value = detail;
-      currentChapterId.value = 'c1';
-      
-      // 获取该小说的章节
-      const novelChapters = getChapters(id);
-      if (novelChapters.length === 0) {
-        // 如果没有对应小说的章节，生成一些示例章节
-        chapters.value = [
-          { id: 'c1', name: '第一章 秦羽' },
-          { id: 'c2', name: '第二章 神秘石碑' },
-          { id: 'c3', name: '第三章 奇遇' },
-          { id: 'c4', name: '第四章 修炼之路' },
-          { id: 'c5', name: '第五章 家族试炼' }
-        ];
-      } else {
-        chapters.value = novelChapters.map((c: any, index: number) => ({
-          id: `c${index + 1}`,
-          name: c.name
-        }));
-      }
-      totalChapters.value = chapters.value.length;
-    }
-  } catch (error) {
-    console.error('获取小说详情失败:', error);
-  } finally {
-    loading.value = false;
-  }
-};
-
 // 筛选章节
 const filterChapters = () => {
   currentPage.value = 1;
-};
-
-// 分页变化
-const handlePageChange = (page: number, size: number) => {
-  currentPage.value = page;
-  pageSize.value = size;
 };
 
 // 开始阅读
@@ -185,16 +182,15 @@ const startReading = () => {
 };
 
 // 跳转到章节
-const goToChapter = (chapterId: string) => {
-  router.push(`/app/read/${chapterId}`);
+const goToChapter = (id: string) => {
+  handleItemClick({ id: id }, `/app/novel/detail`, router, false, false);
 };
 
-onMounted(() => {
-  fetchNovelDetail();
-});
-
-watch(() => route.params.id, () => {
-  fetchNovelDetail();
+// 挂载事件
+onMounted(async () => {
+    await nextTick(() => {
+        handleGetURL();
+    });
 });
 </script>
 
@@ -367,31 +363,6 @@ watch(() => route.params.id, () => {
 .chapter-item.active {
   background: #3f3f3f;
   color: #fff;
-}
-
-/* 目录分页 */
-.catalog-pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-
-/* 空状态 */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 400px;
-  color: #999;
-}
-
-.empty-state .iconfont {
-  font-size: 64px;
-  margin-bottom: 16px;
-}
-
-.empty-state p {
-  font-size: 16px;
 }
 
 /* 响应式设计 - 平板 */

@@ -1,6 +1,5 @@
 <template>
     <div class="app-content">
-        <div class="c-layout layout-right"></div>
         <div class="c-layout layout-left">
             <slot name="left">
                 left

@@ -35,17 +35,17 @@ import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 // @ts-ignore
 import request from "@/utils/request.js";
-import { isValidValue, handleDecodemultiple, handleItemClick } from "@/utils/utils.js";
+import { isValidValue, handleItemClick } from "@/utils/utils.js";
 import NovelList from './NovelList.vue';
 
 const route = useRoute();
 const router = useRouter();
 
 // 数据源
-const apiURL = `/api/app/books/query`;
+const apiURL = `/api/app/books/list`;
 const dataSource = ref([]);
 const pagination = ref({
-    size: 28,
+    size: 50,
     index: 1,
     total: 0
 });
@@ -103,7 +103,7 @@ const onPageChange = (index: number, size: number) => {
         index: value.index.toString(),
         size: value.size.toString()
     }, '/app/novel/index', router)
-    handleGetList();
+    // handleGetList();
 };
 
 const seMessage = ref<string>('');
@@ -137,7 +137,7 @@ onMounted(async () => {
             pagination.value.index = parseInt(index, 10);
         }
         if (size) {
-            pagination.value.size = Math.max(20, parseInt(size, 10));
+            pagination.value.size = parseInt(size, 10);
         }
         // console.log(pagination.value);
         setTimeout(() => {
@@ -164,7 +164,7 @@ watch(route, (to, from) => {
         pagination.value.index = parseInt(index, 10);
     }
     if (size) {
-        pagination.value.size = Math.min(20, parseInt(size, 10));
+        pagination.value.size = parseInt(size, 10);
     }
 
     // 重新获取数据
