@@ -1,28 +1,15 @@
 <template>
   <div class="novel-list-container">
-
-    <!-- 分类导航 - 响应式 -->
-    <div class="category-nav">
-      <div 
-        v-for="item in novelCategories" 
-        :key="item.id"
-        :class="['category-item', { active: currentCategory === item.id }]"
-        @click="selectCategory(item.id)"
-      >
-        {{ item.name }}
-      </div>
-    </div>
-
     <!-- 小说列表 - 响应式网格布局 -->
     <div class="novel-grid">
       <div 
-        v-for="novel in filteredNovels" 
+        v-for="novel in props.dataSource" 
         :key="novel.id"
         class="novel-card"
-        @click="goToDetail(novel.id)"
+        @click="handleItemClickDetail(novel.id)"
       >
         <div class="novel-cover">
-          <img :src="novel.cover || '/default-cover.jpg'" alt="封面" />
+          <img :src="novel.cover_url1 || '/default-cover.jpg'" alt="封面" />
           <div class="novel-tag" v-if="novel.isHot">热门</div>
         </div>
         <div class="novel-info">
@@ -30,102 +17,74 @@
           <p class="novel-author">作者：{{ novel.author || '未知' }}</p>
           <p class="novel-desc">{{ novel.description || '暂无简介' }}</p>
           <div class="novel-meta">
-            <span class="novel-chapters">共{{ novel.chapterCount || 0 }}章</span>
-            <span class="novel-update">更新于{{ novel.updateTime }}</span>
+            <span class="novel-chapters">共{{ novel.total_chapters || 0 }}章</span>
+            <span class="novel-update">更新于{{ novel.update_time }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 分页 -->
-    <div class="pagination-container">
-      <a-pagination
-        v-model:current="currentPage"
-        v-model:page-size="pageSize"
-        :total="total"
-        show-size-changer
-        show-quick-jumper
-        :show-total="(current, total) => `共 ${total} 条`"
-        @change="handlePageChange"
-        class="custom-pagination"
-      />
-    </div>
-
-    <!-- 空状态 -->
-    <div v-if="filteredNovels.length === 0 && !loading" class="empty-state">
-      <i class="iconfont icon-empty"></i>
-      <p>暂无数据</p>
-    </div>
+    <!--分页-->
+    <template v-if="computedDataSource && computedDataSource.length > 0">
+        <div class="a-page-box">
+            <a-pagination :current="index" :page-size="size" :total="total" :show-total="() => `共计 ${total} 条`"
+                @change="onChange" />
+        </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, nextTick, computed } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { mockCategories, mockNovels } from './mock-data';
+import { handleItemClick, isValidValue } from '@/utils/utils';
 
 const router = useRouter();
 const route = useRoute();
 
-// 数据状态
-const novels = ref<any[]>([...mockNovels]);
-const novelCategories = ref<any[]>([...mockCategories]);
-const loading = ref(false);
-const currentPage = ref(1);
-const pageSize = ref(8);
-const total = ref(mockNovels.length);
-const searchText = ref('');
-const currentCategory = ref<string | undefined>(undefined);
+// 定义 props
+const props = withDefaults(defineProps<{
+    dataSource?: any[] | { value: any[] },
+    onPageChange?: (index: number, size: number) => void,
+    pagination?: {
+        index: number,
+        size: number,
+        total: number
+    }
+}>(), {});
 
-// 过滤后的小说列表
-const filteredNovels = computed(() => {
-  let result = [...novels.value];
-  
-  // 按分类过滤
-  if (currentCategory.value) {
-    result = result.filter((n: any) => n.classId === currentCategory.value);
-  }
-  
-  // 按搜索词过滤
-  if (searchText.value) {
-    const keyword = searchText.value.toLowerCase();
-    result = result.filter((n: any) => 
-      n.title.toLowerCase().includes(keyword) ||
-      n.author.toLowerCase().includes(keyword)
-    );
-  }
-  
-  return result;
+// 处理列表项点击事件
+const handleItemClickDetail = (id: string) => {
+    handleItemClick({ id: id }, `/app/novel/detail`, router, false, true);
+};
+
+// 计算属性，用于处理 dataSource
+const computedDataSource = computed(() => {
+    if (Array.isArray(props.dataSource)) {
+        return props.dataSource;
+    } else if (props.dataSource && props.dataSource.value && Array.isArray(props.dataSource.value)) {
+        return props.dataSource.value;
+    }
+    return [];
 });
 
-// 搜索处理
-const handleSearch = () => {
-  currentPage.value = 1;
-  currentCategory.value = undefined;
+// 分页
+const size = computed(() => props.pagination?.size || 30);
+const index = computed(() => props.pagination?.index || 1);
+const total = computed(() => props.pagination?.total || 0);
+const onChange = (current: number, pageSize: number) => {
+    // 调用父组件传递的 onPageChange 函数
+    if (props.onPageChange) {
+        props.onPageChange(current, pageSize);
+    }
 };
 
-// 选择分类
-const selectCategory = (categoryId: string) => {
-  currentCategory.value = categoryId === currentCategory.value ? undefined : categoryId;
-  currentPage.value = 1;
-};
+onMounted(async function () {
+    // 使用 $nextTick 确保 DOM 已经渲染完成
+    await nextTick(() => {
 
-// 分页变化
-const handlePageChange = (page: number, size: number) => {
-  currentPage.value = page;
-  pageSize.value = size;
-};
-
-// 跳转到详情页
-const goToDetail = (id: string) => {
-  router.push(`/app/novel/${id}`);
-};
-
-onMounted(() => {
-  // 模拟加载延迟
-  setTimeout(() => {
-    loading.value = false;
-  }, 500);
+    });
 });
 </script>
 

@@ -3,7 +3,7 @@
         "path": "/app",
         "name": "前台",
         "source": "/app/Home.vue",
-        "redirect": "/app/novel/list",
+        "redirect": "/app/novel/index",
         "children": [
             {
                 "path": "/welcome",
@@ -11,12 +11,12 @@
                 "source": "/app/Welcome.vue"
             },
             {
-                "path": "/novel/list",
+                "path": "/novel/index",
                 "name": "小说列表",
-                "source": "/app/novel/NovelList.vue"
+                "source": "/app/novel/NovelIndex.vue"
             },
             {
-                "path": "/novel/:id",
+                "path": "/novel/detail",
                 "name": "小说详情",
                 "source": "/app/novel/NovelDetail.vue"
             },

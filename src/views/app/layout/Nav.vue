@@ -1,6 +1,6 @@
 <template>
     <div class="app-nav">
-        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/app/novel/list')">
+        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/app/novel/index')">
             首页
         </div>
         <template v-if="computedDataSource.length > 0">
