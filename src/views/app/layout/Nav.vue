@@ -131,31 +131,6 @@ const computedDataSource = computed(() => {
 }
 
 /* ==================== 
-   平板设备响应式样式 (768px - 991px)
-   ==================== */
-@media (max-width: 991px) and (min-width: 768px) {
-    .app-nav {
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    .app-nav::before,
-    .app-nav::after {
-        display: none;
-    }
-
-    .app-nav .li {
-        padding: 8px 15px;
-        font-size: 15px;
-        border-radius: 4px;
-    }
-
-    .app-nav .li::after {
-        display: none;
-    }
-}
-
-/* ==================== 
    手机设备响应式样式 (< 768px)
    ==================== */
 @media (max-width: 767px) {
@@ -188,16 +163,6 @@ const computedDataSource = computed(() => {
     /* 移动端导航项悬停效果 */
     .app-nav .li:hover {
         background-color: rgba(63, 63, 63, 0.5);
-    }
-}
-
-/* ==================== 
-   小屏手机响应式样式 (< 480px)
-   ==================== */
-@media (max-width: 479px) {
-    .app-nav .li {
-        padding: 12px 15px;
-        font-size: 15px;
     }
 }
 </style>

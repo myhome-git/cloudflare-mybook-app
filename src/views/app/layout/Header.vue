@@ -28,4 +28,13 @@ const onSearch = (value: string) => {
     transform: translateY(-50%);
     width: 140px;
 }
+/* ==================== 
+手机设备响应式样式 (< 768px)
+==================== */
+@media (max-width: 767px) {
+  /* 顶部导航优化 */
+  .app-header {
+    display: none;
+  }
+}
 </style>

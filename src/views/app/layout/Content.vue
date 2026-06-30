@@ -13,7 +13,7 @@ import { ref, computed } from 'vue';
 
 <style scoped>
 .app-content {
-    padding: 26px 0;
+    padding: 0;
     display: grid;
     gap: 26px;
     align-items: start;
@@ -56,29 +56,10 @@ import { ref, computed } from 'vue';
     border-radius: 5px;
 }
 
-/* 平板设备响应式样式 (768px - 991px) */
-@media (max-width: 991px) and (min-width: 768px) {
-    .app-content {
-        padding: 20px;
-        gap: 20px;
-    }
-
-    .layout-right {
-        order: 2;
-        width: 35%;
-        max-width: 400px;
-    }
-
-    .layout-left {
-        order: 1;
-        width: 100%;
-    }
-}
-
 /* 手机设备响应式样式 (< 768px) */
 @media (max-width: 767px) {
     .app-content {
-        padding: 10px;
+        padding: 0px;
         gap: 15px;
     }
 

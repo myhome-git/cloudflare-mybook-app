@@ -39,9 +39,7 @@ import './assets/css/common.css';
 import Header from './layout/Header.vue';
 import Nav from './layout/Nav.vue';
 import Content from './layout/Content.vue';
-import Hot from './Hot.vue';
 import Footer from './layout/Footer.vue';
-
 const route = useRoute();
 const router = useRouter();
 
@@ -125,13 +123,6 @@ watch(route, (to, from) => {
     /* outline: 1px solid red; */
 }
 
-/* PC 设备（宽度大于 992px）使用 1200px 固定宽度 */
-@media (min-width: 1200px) {
-    .x-container {
-        width: 1200px;
-    }
-}
-
 .x-container.flex-auto {
     flex: 1;
     display: flex;
@@ -181,173 +172,13 @@ watch(route, (to, from) => {
 .fade-leave-to {
     opacity: 0;
 }
-
 /* ==================== 
-   手机设备响应式样式 (< 768px)
-   ==================== */
+手机设备响应式样式 (< 768px)
+==================== */
 @media (max-width: 767px) {
-    /* 整体布局优化 */
-    .app-win {
-        font-size: 14px;
-        overflow-x: hidden;
-    }
-
-    /* 隐藏 PC 端顶部 Header */
-    .app-header {
-        display: none;
-    }
-
-    /* 移动端顶部导航栏 */
-    .mobile-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 50px;
-        background-color: #e8e7e3;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 15px;
-        z-index: 1000;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .mobile-header .logo {
-        font-size: 20px;
-        font-weight: bold;
-        color: #FF5722;
-    }
-
-    .mobile-header .search-btn {
-        background: none;
-        border: none;
-        font-size: 20px;
-        color: #333;
-        padding: 5px;
-    }
-
-    /* 移动端导航栏 */
-    .layout-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: auto;
-        max-height: calc(100vh - 50px - 60px);
-        overflow-y: auto;
-        background-color: #e8e7e3;
-        z-index: 999;
-    }
-
-    .app-nav {
-        display: flex;
-        flex-direction: column;
-        padding: 10px 0;
-    }
-
-    .app-nav::before,
-    .app-nav::after {
-        display: none;
-    }
-
-    .app-nav .li {
-        padding: 15px 20px;
-        font-size: 16px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .app-nav .li::after {
-        display: none;
-    }
-
-    .app-nav .li:last-child {
-        border-bottom: none;
-    }
-
-    /* 内容区域调整 */
-    .x-container.flex-auto {
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
-
-    .layout-content {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    .c-layout.layout-right {
-        order: 2;
-        width: 100%;
-        max-width: 100%;
-        margin-top: 15px;
-        padding: 0 10px;
-    }
-
-    .c-layout.layout-left {
-        order: 1;
-        width: 100%;
-        padding: 0;
-    }
-
-    /* 热门排行卡片 */
-    .app-unit {
-        margin-bottom: 15px;
-    }
-
-    .app-unit .unit-title {
-        padding: 0 10px;
-        font-size: 15px;
-    }
-
-    .app-unit .unit-content {
-        padding: 10px;
-    }
-
-    .app-unit .unit-content > ul > li {
-        line-height: 28px;
-        font-size: 14px;
-    }
-
-    /* 页脚调整 */
-    .layout-footer {
-        padding: 20px 10px;
-        text-align: center;
-        font-size: 12px;
-    }
-
-    /* 底部固定导航（可选） */
-    .mobile-bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 50px;
-        background-color: #fff;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-        z-index: 998;
-    }
-
-    .mobile-bottom-nav .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        color: #666;
-        padding: 5px;
-    }
-
-    .mobile-bottom-nav .nav-item i {
-        font-size: 20px;
-        margin-bottom: 3px;
-    }
-
-    .mobile-bottom-nav .nav-item.active {
-        color: #FF5722;
-    }
+  /* 顶部导航优化 */
+  .x-container {
+    width: 100%;
+  }
 }
 </style>
