@@ -3,7 +3,7 @@
     <!-- 阅读器内容区域 -->
     <div class="reader-content">
       <!-- 章节导航 -->
-      <div class="chapter-nav-buttons">
+      <div class="chapter-nav-buttons" v-if="loading">
         <button 
           v-if="prevChapterId" 
           class="chapter-nav-btn"
@@ -180,6 +180,7 @@ const handleGetBookChapters = async () => {
         }
         
         const catalogData = await catalogResponse.json();
+        loading.value = true;
 
         // 作者
         author.value = catalogData.author;
@@ -187,10 +188,13 @@ const handleGetBookChapters = async () => {
         // 清空并填充章节列表
         chapters.value = [];
         catalogData.chapters.forEach((chapter: any) => {
+          // 过滤重复章节
+          if (!chapters.value.some((ch: any) => ch.id === chapter.file)){
             chapters.value.push({
                 id: chapter.file,
                 name: chapter.title || chapter.name || `第${chapter.file}章`
             });
+          }
         });
         
         // 查找当前章节在列表中的位置
@@ -284,6 +288,11 @@ const goToChapters = () => {
 
 // 跳转到章节
 const goToChapter = (id: string) => {
+  // const params = new URLSearchParams();
+  // params.set('id', id);
+  // params.set('folder', folder.value);
+  // params.set('folder_index', folder_index.value);
+  // location.href = `/app/books/read?${params.toString()}`;
   handleItemClick({ folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
   window.scrollTo(0, 0);
 };

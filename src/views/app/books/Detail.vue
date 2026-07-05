@@ -99,6 +99,7 @@ const isServerResult = ref({
 });
 
 const handleGetURL = () => {
+  loading.value = true;
     let sendParams = Object.assign({});
     request({
         url: `${apiURL}`,
@@ -112,7 +113,7 @@ const handleGetURL = () => {
     }).catch((err: any) => {
         
     }).finally(() => {
-
+        loading.value = false;
     });
 };
 
