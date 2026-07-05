@@ -35,14 +35,14 @@
         <ReaderSetting></ReaderSetting>
       </template>
       <!-- 阅读内容 -->
-       <template v-if="currentContent">
-        <div class="reading-area">
+      <template v-if="currentContent">
+       <div class="reading-area" :style="{ fontSize: readerSettings.fontSize }">
           <div class="chapter-info">
             <h2 class="chapter-name">{{ currentChapterTitle }}</h2>
             <p class="chapter-meta">作者：{{ author }} , 字数：{{ chapterWordCount }}</p>
           </div>
           
-          <div class="chapter-content" ref="contentRef" :style="{ fontSize: readerSettings.fontSize + '%' }">
+          <div class="chapter-content" ref="contentRef" :style="{ fontSize: readerSettings.fontSize }">
             <div v-html="renderContent(currentContent)"></div>
           </div>
         </div>
@@ -101,8 +101,8 @@ const loading = ref(false);
 
 // 阅读器设置
 const readerSettings = ref({
-  theme: 'light' as 'light' | 'sepia' | 'dark',
-  fontSize: 100,
+  theme: '',
+  fontSize: `${localStorage.getItem('readerFontSize') || '100%'}`,
   show: false
 });
 
@@ -301,6 +301,9 @@ onMounted(() => {
   folder.value = `${route.query.folder}`;
   folder_index.value = `${route.query.folder_index}`;
   chapterId.value = `${route.query.id}`;
+
+  // 从 localStorage 读取并校验主题，只允许三种合法值
+  readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
   handleGetURL()
 });
 
@@ -315,23 +318,26 @@ watch(() => route.query.id, async (newId) => {
     location.reload()
   }
 });
+
+// 监听主题和字体大小变化
+watch(() => readerSettings.value.theme, (newTheme) => {
+  document.body.className = newTheme;
+});
+
+// 监听window.parent.postMessage消息
+window.addEventListener('message', (event) => {
+  if (event.data.type === 'themeChange') {
+    readerSettings.value.theme = event.data.theme;
+  } else if (event.data.type === 'fontSizeChange') {
+    readerSettings.value.fontSize = event.data.fontSize;
+  }
+});
 </script>
 
 <style scoped>
 .reader-container {
   min-height: 100vh;
-  background: #fdfcf8;
   transition: all 0.3s;
-}
-
-/* 主题样式 */
-.reader-container.theme-sepia {
-  background: #f7f3e8;
-}
-
-.reader-container.theme-dark {
-  background: #1a1a1a;
-  color: #d4d4d4;
 }
 
 .header-content {
@@ -510,4 +516,117 @@ watch(() => route.query.id, async (newId) => {
     justify-content: center;
   }
 }
+</style>
+<style>
+body.default .app-win{
+  background-color: #fdfcf8;
+}
+body.green .app-win{
+  background-color: #cddfcd;
+}
+body.blue .app-win{
+  background-color: #cfdde1;
+}
+body.pink .app-win{
+  background-color: #ebcece;
+}
+body.gray .app-win{
+  background-color: #d0d0d0;
+}
+body.sepia .app-win{
+  background-color: #ede7da;
+}
+body.dark .app-win{
+  background-color: #1a1a1a;
+}
+
+/**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色*/
+body.dark .layout-nav{
+  background-color: #1a1a1a;
+  color: #d4d4d4;
+}
+body.dark .reader-container{
+  background-color: #1a1a1a;
+  color: #d4d4d4;
+}
+body.dark .reading-area{
+  border: 1px solid #333;
+}
+body.dark .chapter-content{
+  color: #646161;
+}
+body.dark .chapter-nav-btn{
+  background-color: #1a1a1a;
+  color: #646161;
+  border: 1px solid #333;
+}
+/**绿色*/
+body.green .layout-nav{
+  background-color: #cddfcd;
+  color: #333;
+}
+body.green .reader-container{
+  background-color: #cddfcd;
+  color: #333;
+}
+body.green .chapter-content{
+  color: #333;
+}
+body.green .chapter-nav-btn{
+  background-color: #cddfcd;
+  color: #333;
+  border: 1px solid #333;
+}
+/**蓝色*/
+body.blue .layout-nav{
+  background-color: #cfdde1;
+  color: #333;
+}
+body.blue .reader-container{
+  background-color: #cfdde1;
+  color: #333;
+}
+body.blue .chapter-content{
+  color: #333;
+}
+body.blue .chapter-nav-btn{
+  background-color: #cfdde1;
+  color: #333;
+  border: 1px solid #333;
+}
+/**粉色*/
+body.pink .layout-nav{
+  background-color: #ebcece;
+  color: #333;
+}
+body.pink .reader-container{
+  background-color: #ebcece;
+  color: #333;
+}
+body.pink .chapter-content{
+  color: #333;
+}
+body.pink .chapter-nav-btn{
+  background-color: #ebcece;
+  color: #333;
+  border: 1px solid #333;
+}
+/**灰色*/
+body.gray .layout-nav{
+  background-color: #d0d0d0;
+  color: #333;
+}
+body.gray .reader-container{
+  background-color: #d0d0d0;
+  color: #333;
+}
+body.gray .chapter-content{
+  color: #333;
+}
+body.gray .chapter-nav-btn{
+  background-color: #d0d0d0;
+  color: #333;
+  border: 1px solid #333;
+}
+
 </style>

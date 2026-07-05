@@ -9,14 +9,26 @@
           </a-button>
           <template #overlay>
             <a-menu @click="handleSettingChange">
-              <a-menu-item key="light">
-                <HomeOutlined /> 浅色
+              <a-menu-item key="default">
+                默认
+              </a-menu-item>
+              <a-menu-item key="green">
+                <HomeOutlined /> 护眼绿
+              </a-menu-item>
+              <a-menu-item key="blue">
+                <CloudOutlined /> 海水蓝
+              </a-menu-item>
+              <a-menu-item key="pink">
+                <CloudOutlined /> 胭脂粉
+              </a-menu-item>
+              <a-menu-item key="gray">
+                <CloudOutlined /> 冷淡灰
               </a-menu-item>
               <a-menu-item key="sepia">
-                <CloudOutlined /> 护眼
+                <CloudOutlined /> 纸张黄
               </a-menu-item>
               <a-menu-item key="dark">
-                <ThunderboltOutlined /> 深色
+                <ThunderboltOutlined /> 夜间模式
               </a-menu-item>
             </a-menu>
           </template>
@@ -24,14 +36,16 @@
         <!-- 字体大小 -->
         <a-dropdown :trigger="['click']">
           <a-button size="large">
-            Az {{ readerSettings.fontSize }}%
+            Az {{ readerSettings.fontSize }}
           </a-button>
           <template #overlay>
             <a-menu @click="handleFontSizeChange">
-              <a-menu-item key="80">小</a-menu-item>
-              <a-menu-item key="100">中</a-menu-item>
-              <a-menu-item key="120">大</a-menu-item>
-              <a-menu-item key="140">超大</a-menu-item>
+              <a-menu-item key="14px">14</a-menu-item>
+              <a-menu-item key="16px">16</a-menu-item>
+              <a-menu-item key="18px">18</a-menu-item>
+              <a-menu-item key="20px">20</a-menu-item>
+              <a-menu-item key="22px">22</a-menu-item>
+              <a-menu-item key="24px">24</a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
@@ -58,17 +72,35 @@ const route = useRoute();
 // 阅读器设置
 const readerSettings = ref({
   theme: 'light' as 'light' | 'sepia' | 'dark',
-  fontSize: 100
+  fontSize: `${localStorage.getItem('readerFontSize') || '100%'}`
 });
 
 // 主题设置变化
 const handleSettingChange = (e: any) => {
-  readerSettings.value.theme = e.key as 'light' | 'sepia' | 'dark';
+  readerSettings.value.theme = e.key;
+  localStorage.setItem('readerTheme', e.key);
+  // 发送消息给父组件，通知主题变化
+  window.parent.postMessage(
+    {
+      type: 'themeChange',
+      theme: e.key
+    },
+    '*'
+  );
 };
 
 // 字体大小变化
 const handleFontSizeChange = (e: any) => {
-  readerSettings.value.fontSize = parseInt(e.key);
+  readerSettings.value.fontSize = e.key;
+  localStorage.setItem('readerFontSize', e.key);
+  // 发送消息给父组件，通知字体大小变化
+  window.parent.postMessage(
+    {
+      type: 'fontSizeChange',
+      fontSize: e.key
+    },
+    '*'
+  );
 };
 
 onMounted(() => {
