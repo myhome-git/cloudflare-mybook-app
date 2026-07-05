@@ -102,7 +102,7 @@ const loading = ref(false);
 // 阅读器设置
 const readerSettings = ref({
   theme: '',
-  fontSize: `${localStorage.getItem('readerFontSize') || '100%'}`,
+  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
   show: false
 });
 

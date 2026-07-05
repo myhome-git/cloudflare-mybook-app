@@ -10,13 +10,10 @@
 <script setup lang="ts"></script>
 <style scoped>
 .app-logo{
-	position: absolute;
-	left: 0;
-	top: 0;
-	bottom: 0;
 	height: 40px;
 	line-height: 20px;
 	margin: auto;
+	flex: 1;
 }
 .app-logo span{
 	font-weight: bold;
@@ -29,7 +26,12 @@
 	color: #666;
 	font-weight: normal;
 }
-.app-logo p{
-	
+/* ==================== 
+手机设备响应式样式 (< 768px)
+==================== */
+@media (max-width: 767px) {
+    .app-logo{
+        display: none;
+    }
 }
 </style>

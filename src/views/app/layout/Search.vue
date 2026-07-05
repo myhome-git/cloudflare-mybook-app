@@ -20,18 +20,14 @@ const handleClick = () => {
 </script>
 <style scoped>
 .x-head-search {
-    width: 320px;
-    height: 38px;
+    flex: 1;
     border: 1px solid #ccc;
     border-radius: 20px;
     position: relative;
-    position: absolute;
-    top: 0;
-    left: 455px;
-    bottom: 0;
     margin: auto;
     color: #ccc;
     transition: all 0.3s ease-in-out 0s;
+    margin: 0px 20px;
     /*box-shadow: 0px 0px 5px rgba(0,0,0,0.2);*/
 }
 

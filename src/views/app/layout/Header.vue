@@ -17,24 +17,16 @@ const onSearch = (value: string) => {
 </script>
 <style scoped>
 .app-header {
-    padding: 20px 0;
-    position: relative;
-    height: 100px;
+    /**左右排列 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 0px;
+    gap: 16px;
 }
-.app-header .header-menu {
-    position: absolute;
-    right: 0;
-    top: 25px;
-    transform: translateY(-50%);
-    width: 140px;
-}
-/* ==================== 
-手机设备响应式样式 (< 768px)
-==================== */
-@media (max-width: 767px) {
-  /* 顶部导航优化 */
-  .app-header {
-    display: none;
-  }
+@media screen and (max-width: 767px) {
+    .app-header {
+        padding: 10px 0px;
+    }
 }
 </style>

@@ -28,13 +28,6 @@ const handleItemClickWrapper = (obj: any, url: string) => {
 };
 </script>
 <style scoped>
-.header-login {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    padding: 10px 0px 10px 0px;
-}
-
 .header-login a {
     padding: 0px 10px 0px 10px;
     font-size: 16px;
@@ -49,5 +42,9 @@ const handleItemClickWrapper = (obj: any, url: string) => {
     margin-right: 5px;
 }
 
-.header-login a:hover :deep(.anticon) {}
+@media (max-width: 767px) {
+    .header-login{
+        display: none;
+    }
+}
 </style>

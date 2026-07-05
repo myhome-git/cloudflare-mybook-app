@@ -8,14 +8,15 @@
         class="novel-list-item"
         @click="handleItemClickDetail(novel)"
       >
-        <span class="novel-list-dot">•</span>
-        <div class="novel-list-content">
-          <span class="novel-list-title">{{ novel.row_num }}</span>
-          <span class="novel-list-title">{{ novel.title }}</span>
-          <span class="novel-list-author" v-if="novel.author">作者：{{ novel.author }}</span>
-          <span class="novel-list-chapters">共{{ novel.total_chapters || 0 }}章</span>
-          <span class="novel-list-update" v-if="novel.update_time">更新于{{ novel.update_time }}</span>
+        <div class="novel-list-item-title" >
+          <span class="novel-list-dot">•{{ novel.row_num }}</span>
+          <span>{{ novel.title }}</span>
         </div>
+        <div class="novel-list-author-chapters">
+          <span v-if="novel.author">作者：{{ novel.author }}</span>
+        </div>
+        <div>共 {{ novel.total_chapters || 0 }} 章</div>
+        <div class="novel-list-update" v-if="novel.update_time">更新于：{{ novel.update_time }}</div>
       </div>
     </div>
 
@@ -95,14 +96,16 @@ const onChange = (current: number, pageSize: number) => {
 }
 
 .novel-list-item {
-  display: flex;
-  align-items: baseline;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
   border-bottom: 1px dashed #e1e4e8;
 }
-
+.novel-list-item .novel-list-item-title {
+  display: flex;
+  align-items: center;
+  color: #0969da;
+}
 .novel-list-item:last-child {
   border-bottom: none;
 }
@@ -114,7 +117,6 @@ const onChange = (current: number, pageSize: number) => {
 .novel-list-dot {
   display: inline-block;
   margin-right: 12px;
-  color: #656d76;
   font-size: 14px;
   line-height: 1.8;
   flex-shrink: 0;
@@ -127,7 +129,6 @@ const onChange = (current: number, pageSize: number) => {
   gap: 12px;
   overflow: hidden;
   font-size: 14px;
-  color: #24292f;
 }
 
 .novel-list-title {
@@ -141,9 +142,7 @@ const onChange = (current: number, pageSize: number) => {
 .novel-list-author,
 .novel-list-chapters,
 .novel-list-update {
-  color: #656d76;
   white-space: nowrap;
-  font-size: 13px;
 }
 
 /* 分页 */
@@ -151,5 +150,18 @@ const onChange = (current: number, pageSize: number) => {
   text-align: center;
   padding: 24px 0;
   background-color: #e6f4ff;
+}
+
+@media screen and (min-width: 768px) {
+  /*平均分布，左对齐*/
+  .novel-list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .novel-list-item > * {
+    flex: 1;
+    text-align: left; /* 确保文字左对齐 */
+  }
 }
 </style>

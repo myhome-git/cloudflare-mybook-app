@@ -133,10 +133,6 @@ watch(route, (to, from) => {
     flex: 1;
 }
 
-.app-header {
-    padding: 20px 0;
-}
-
 .layout-nav {
     background-color: #e8e7e3;
     color: #999;
