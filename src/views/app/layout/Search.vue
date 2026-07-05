@@ -45,7 +45,7 @@ const handleClick = () => {
     height: 36px;
     border: 0;
     border-radius: 20px 0px 0px 20px;
-    width: 256px;
+    width: calc(100% - 62px);
     padding-left: 15px;
     background-color: transparent;
 }
