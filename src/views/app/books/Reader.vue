@@ -72,7 +72,7 @@
         </div>
        </template>
        <template v-else>
-          <div style="color:#999;text-align: center;">Loading...</div>
+          <div>{{ isServerResult.message }}</div>
         </template>
       
     </div>
@@ -164,9 +164,9 @@ const handleGetURL = () => {
         fileURL.value = result.url;
         handleGetBookChapters();
     }).catch((err: any) => {
-        
+        isServerResult.value.status = 500;
+        isServerResult.value.message = `Error：${err.message || err.data.message}`;
     }).finally(() => {
-
     });
 };
 
@@ -222,7 +222,7 @@ const handleGetBookChapters = async () => {
         const chapterResponse = await fetch(chapterUrl);
         
         if (!chapterResponse.ok) {
-            throw new Error(`Failed to fetch chapter content: ${chapterResponse.status}`);
+          throw new Error(`Failed to fetch chapter: ${chapterResponse.status}`);
         }
         
         const content = await decompressGzip(chapterResponse);
@@ -233,9 +233,8 @@ const handleGetBookChapters = async () => {
         currentChapterTitle.value = chapters.value[currentIndex]?.name || `第${chapterId.value}章`;
         chapterWordCount.value = content.length;
     } catch (err: any) {
-        console.error('Error loading chapter:', err);
         isServerResultValue.status = 500;
-        isServerResultValue.message = `Error：${err.message}`;
+        isServerResultValue.message = `Error：${err.message || err.data?.message}`;
     }
 };
 

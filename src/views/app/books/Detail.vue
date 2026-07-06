@@ -107,7 +107,7 @@ const handleGetURL = () => {
       handleGetBookChapters({url: result.url, folder: folder, folder_index: folderIndex});
   }).catch((err: any) => {
       isServerResult.value.status = 500;
-      isServerResult.value.message = `Error：${err.data.message || err.message}`;
+      isServerResult.value.message = `Error：${err.message || err.data.message}`;
   });
 };
 
@@ -132,7 +132,7 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
         isServerResultValue.message = 'Data loaded successfully';
     }).catch((err: any) => {
         isServerResultValue.status = 500;
-        isServerResultValue.message = `Error：${err.data.message || err.message}`;
+        isServerResultValue.message = `Error：${err.message || err.data.message}`;
     });
 };
 
