@@ -58,7 +58,7 @@ const props = withDefaults(defineProps<{
 
 // 处理列表项点击事件
 const handleItemClickDetail = (novel: any) => {
-  handleItemClick({ id: novel.id, folder: novel.folder, folder_index: novel.folder_index }, `/app/books/detail`, router, false, false);
+  handleItemClick({ id: novel.id, file_path: novel.file_path, folder: novel.folder, folder_index: novel.folder_index }, `/app/books/detail`, router, false, false);
 };
 
 // 计算属性，用于处理 dataSource

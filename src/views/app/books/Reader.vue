@@ -91,6 +91,7 @@ import {
 import request from "@/utils/request.js";
 import { isValidValue, handleItemClick } from "@/utils/utils.js";
 import ReaderSetting from './ReaderSetting.vue';
+import { file } from '@babel/types';
 
 const router = useRouter();
 const route = useRoute();
@@ -139,6 +140,7 @@ const renderContent = (content: string) => {
 
 // 参数
 const fileURL = ref(``)
+const file_path = ref(``)
 const folder = ref(``)
 const folder_index = ref(``)
 const chapterId = ref(``)
@@ -282,7 +284,7 @@ const decompressGzip = async (response: Response): Promise<string> => {
 
 // 跳转到目录
 const goToChapters = () => {
-  handleItemClick({ folder: folder.value, folder_index: folder_index.value }, `/app/books/detail`, router, false, false);
+  handleItemClick({ file_path: file_path.value, folder: folder.value, folder_index: folder_index.value }, `/app/books/detail`, router, false, false);
   window.scrollTo(0, 0);
 };
 
@@ -293,11 +295,12 @@ const goToChapter = (id: string) => {
   // params.set('folder', folder.value);
   // params.set('folder_index', folder_index.value);
   // location.href = `/app/books/read?${params.toString()}`;
-  handleItemClick({ folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
+  handleItemClick({ file_path: file_path.value, folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
   window.scrollTo(0, 0);
 };
 
 onMounted(() => {
+  file_path.value = `${route.query.file_path}`;
   folder.value = `${route.query.folder}`;
   folder_index.value = `${route.query.folder_index}`;
   chapterId.value = `${route.query.id}`;
@@ -370,6 +373,7 @@ window.addEventListener('message', (event) => {
   padding: 20px;
   font-size: 20px;
   border: 1px solid #eee;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 
 .chapter-info {
@@ -550,6 +554,7 @@ body.dark .reader-container{
   color: #d4d4d4;
 }
 body.dark .reading-area{
+  background-color: #1a1a1a;
   border: 1px solid #333;
 }
 body.dark .chapter-content{

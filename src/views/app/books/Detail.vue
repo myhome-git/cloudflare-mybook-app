@@ -1,13 +1,7 @@
 <template>
   <div class="novel-detail-container">
-    <!-- 加载状态 -->
-    <div v-if="loading" class="loading-state">
-      <i class="iconfont icon-loading rotate360"></i>
-      <p>加载中...</p>
-    </div>
-
     <!-- 小说详情内容 -->
-    <template v-else-if="novelData">
+    <template v-if="novelData">
       <!-- 顶部信息栏 - 响应式 -->
       <div class="detail-header">
         <div class="header-content">
@@ -68,12 +62,11 @@
         </div>
       </div>
     </template>
-
-    <!-- 空状态 -->
-    <div v-else class="empty-state">
-      <i class="iconfont icon-empty"></i>
-      <p>暂无数据</p>
-    </div>
+    <template v-else>
+      <div class="no-data">
+        <p>系统提示：{{ isServerResult.message }}</p>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -88,6 +81,7 @@ const router = useRouter();
 const route = useRoute();
 
 // 参数
+const file_path = ref(``)
 const folder = ref(``)
 const folder_index = ref(``)
 
@@ -99,22 +93,25 @@ const isServerResult = ref({
 });
 
 const handleGetURL = () => {
-  loading.value = true;
-    let sendParams = Object.assign({});
-    request({
-        url: `${apiURL}`,
-        params: sendParams
-    }).then((data: any) => {
-        const result = data.result;
-        const value = route.query;
-        const folder = isValidValue(value.folder) ? String(value.folder) : '';
-        const folderIndex = isValidValue(value.folder_index) ? String(value.folder_index) : '';
-        handleGetBookChapters({url: result.url, folder: folder, folder_index: folderIndex});
-    }).catch((err: any) => {
-        
-    }).finally(() => {
-        loading.value = false;
-    });
+  isServerResult.value.status = 0;
+  isServerResult.value.message = 'Loading...';
+  let sendParams = Object.assign({});
+  request({
+      url: `${apiURL}`,
+      params: sendParams
+  }).then((data: any) => {
+      const result = data.result;
+      const value = route.query;
+      const folder = isValidValue(value.folder) ? String(value.folder) : '';
+      const folderIndex = isValidValue(value.folder_index) ? String(value.folder_index) : '';
+      handleGetBookChapters({url: result.url, folder: folder, folder_index: folderIndex});
+  }).catch((err: any) => {
+      isServerResult.value.status = 500;
+      isServerResult.value.message = `Error：${err.data.message || err.message}`;
+  }).finally(() => {
+      isServerResult.value.status = 200;
+      isServerResult.value.message = 'Data loaded successfully';
+  });
 };
 
 const handleGetBookChapters = (options: { url: string; folder: string; folder_index: string }) => {
@@ -138,14 +135,14 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
         isServerResultValue.status = 500;
         isServerResultValue.message = `Error：${err.data.message || err.message}`;
     }).finally(() => {
-
+        isServerResultValue.status = 200;
+        isServerResultValue.message = 'Data loaded successfully';
     });
 };
 
 // 数据状态
 const novelData = ref<any>(null);
 const chapters = ref<any[]>([]);
-const loading = ref(false);
 const currentChapterId = ref<string>('c1');
 
 // 开始阅读
@@ -157,12 +154,13 @@ const startReading = () => {
 
 // 跳转到章节
 const goToChapter = (id: string) => {
-  handleItemClick({ folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
+  handleItemClick({ file_path: file_path.value, folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
 };
 
 // 挂载事件
 onMounted(async () => {
     await nextTick(() => {
+        file_path.value = `${route.query.file_path}`;
         folder.value = `${route.query.folder}`;
         folder_index.value = `${route.query.folder_index}`;
         handleGetURL();
@@ -175,19 +173,9 @@ onMounted(async () => {
   background: #fdfcf8;
 }
 
-/* 加载状态 */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 400px;
-  color: #999;
-}
-
-.loading-state .iconfont {
-  font-size: 48px;
-  margin-bottom: 16px;
+.no-data {
+  font-size: 16px;
+  padding: 20px;
 }
 
 /* 头部信息 */

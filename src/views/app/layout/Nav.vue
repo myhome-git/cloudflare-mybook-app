@@ -55,6 +55,7 @@ const computedDataSource = computed(() => {
     align-items: center;
     list-style: none;
     position: relative;
+    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 
 .app-nav::before {

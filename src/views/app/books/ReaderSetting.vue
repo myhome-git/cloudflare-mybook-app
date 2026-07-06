@@ -114,25 +114,6 @@ onUnmounted(() => {
 
 <style scoped>
 .reader-set {
-  background: #fdfcf8;
-  transition: all 0.3s;
-}
-
-/* 主题样式 */
-.reader-set.theme-sepia {
-  background: #f7f3e8;
-}
-
-.reader-set.theme-dark {
-  background: #1a1a1a;
-  color: #d4d4d4;
-}
-
-/* 顶部导航 */
-.reader-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
 }
 
