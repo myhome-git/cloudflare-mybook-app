@@ -55,27 +55,6 @@ const computedDataSource = computed(() => {
     align-items: center;
     list-style: none;
     position: relative;
-    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
-}
-
-.app-nav::before {
-    display: block;
-    content: '';
-    height: 100%;
-    border-left: 1px solid #ddd;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.app-nav::after {
-    display: block;
-    content: '';
-    height: 100%;
-    border-right: 1px solid #ddd;
-    position: absolute;
-    right: 0;
-    top: 0;
 }
 
 .app-nav .li {
@@ -83,10 +62,30 @@ const computedDataSource = computed(() => {
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    color: #666;
     position: relative;
 }
-
+.app-nav::before {
+    display: block;
+    content: '';
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #ddd;
+}
+.app-nav::after {
+    display: block;
+    content: '';
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #ddd;
+}
 .app-nav .li::after {
     display: block;
     content: '';
@@ -95,7 +94,9 @@ const computedDataSource = computed(() => {
     top: 18px;
     right: -1px;
     height: 16px;
-    border-right: 1px solid #ccc;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #ddd;
 }
 
 .app-nav .li:first-child::before {
@@ -149,7 +150,6 @@ const computedDataSource = computed(() => {
     .app-nav .li {
         padding: 15px 20px;
         font-size: 16px;
-        border-bottom: 1px solid #ddd;
         text-align: left;
     }
 
@@ -165,5 +165,22 @@ const computedDataSource = computed(() => {
     .app-nav .li:hover {
         background-color: rgba(63, 63, 63, 0.5);
     }
+}
+</style>
+<style>
+body.dark .app-nav::before {
+    display: block;
+    content: '';
+    border-left-color: #999;
+}
+body.dark .app-nav::after {
+    display: block;
+    content: '';
+    border-right-color: #999;
+}
+body.dark .app-nav .li::before {
+    display: block;
+    content: '';
+    border-left-color: inherit;
 }
 </style>

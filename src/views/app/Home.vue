@@ -182,6 +182,9 @@ watch(route, (to, from) => {
 .app-win{
   color: #999;
 }
+body .layout-nav{
+  color: #666;
+}
 body.default .app-win{
   background-color: #fdfcf8;
 }
@@ -217,7 +220,7 @@ body.dark .app-win{
   color: #d4d4d4;
 }
 body.dark .layout-nav{
-  background-color: #1a1a1a;
+  color: #ddd;
 }
 body.dark .layout-footer{
   background-color: #1a1a1a;
