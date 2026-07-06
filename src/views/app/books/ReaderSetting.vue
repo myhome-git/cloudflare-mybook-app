@@ -79,15 +79,14 @@ const readerSettings = ref({
 const handleSettingChange = (e: any) => {
   readerSettings.value.theme = e.key;
   localStorage.setItem('readerTheme', e.key);
-  // 发送消息给父组件，通知主题变化
-  window.parent.postMessage(
-    {
-      type: 'themeChange',
-      theme: e.key
-    },
-    '*'
-  );
 };
+// 监听主题和字体大小变化
+watch(() => readerSettings.value.theme, (newTheme) => {
+  document.body.className = newTheme;
+});
+watch(() => readerSettings.value.fontSize, (newFontSize) => {
+  document.body.style.fontSize = newFontSize;
+});
 
 // 字体大小变化
 const handleFontSizeChange = (e: any) => {

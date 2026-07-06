@@ -303,9 +303,6 @@ onMounted(() => {
   folder.value = `${route.query.folder}`;
   folder_index.value = `${route.query.folder_index}`;
   chapterId.value = `${route.query.id}`;
-
-  // 从 localStorage 读取并校验主题，只允许三种合法值
-  readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
   handleGetURL()
 });
 
@@ -319,11 +316,6 @@ watch(() => route.query.id, async (newId) => {
     // 回到顶部
     location.reload()
   }
-});
-
-// 监听主题和字体大小变化
-watch(() => readerSettings.value.theme, (newTheme) => {
-  document.body.className = newTheme;
 });
 
 // 监听window.parent.postMessage消息
