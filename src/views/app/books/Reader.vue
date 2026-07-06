@@ -226,6 +226,7 @@ const handleGetBookChapters = async () => {
         const content = await decompressGzip(chapterResponse);
         
         isServerResultValue.status = 200;
+        isServerResultValue.message = 'Data loaded successfully';
         currentContent.value = content;
         currentChapterTitle.value = chapters.value[currentIndex]?.name || `第${chapterId.value}章`;
         chapterWordCount.value = content.length;
@@ -233,8 +234,6 @@ const handleGetBookChapters = async () => {
         console.error('Error loading chapter:', err);
         isServerResultValue.status = 500;
         isServerResultValue.message = `Error：${err.message}`;
-    } finally {
-        isServerResultValue.message = isServerResultValue.status === 200 ? '加载完成' : isServerResultValue.message;
     }
 };
 

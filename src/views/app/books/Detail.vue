@@ -108,9 +108,6 @@ const handleGetURL = () => {
   }).catch((err: any) => {
       isServerResult.value.status = 500;
       isServerResult.value.message = `Error：${err.data.message || err.message}`;
-  }).finally(() => {
-      isServerResult.value.status = 200;
-      isServerResult.value.message = 'Data loaded successfully';
   });
 };
 
@@ -131,12 +128,11 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
             chapters.value.push(chapter)
             return chapter;
         });
+        isServerResultValue.status = 200;
+        isServerResultValue.message = 'Data loaded successfully';
     }).catch((err: any) => {
         isServerResultValue.status = 500;
         isServerResultValue.message = `Error：${err.data.message || err.message}`;
-    }).finally(() => {
-        isServerResultValue.status = 200;
-        isServerResultValue.message = 'Data loaded successfully';
     });
 };
 
@@ -170,12 +166,13 @@ onMounted(async () => {
 
 <style scoped>
 .novel-detail-container {
-  background: #fdfcf8;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 
 .no-data {
   font-size: 16px;
   padding: 20px;
+  margin-top: 20px;
 }
 
 /* 头部信息 */
@@ -183,6 +180,7 @@ onMounted(async () => {
   background: linear-gradient(135deg, #e8e7e3 0%, #f5f5f5 100%);
   padding: 40px 20px;
   border-bottom: 1px solid #ddd;
+  margin-top: 20px;
 }
 
 .header-content {
