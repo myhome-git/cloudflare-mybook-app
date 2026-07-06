@@ -110,8 +110,6 @@ watch(route, (to, from) => {
     position: fixed;
     display: flex;
     flex-direction: column;
-    background-color: #fdfcf8;
-    color: #999;
     overflow-y: scroll;
     overflow-x: auto;
     --appwin--bg-color-rgb: 253, 252, 248;
@@ -136,14 +134,12 @@ watch(route, (to, from) => {
 }
 
 .layout-nav {
-    background-color: #e8e7e3;
-    color: #999;
+    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .layout-footer {
-    background-color: #e8e7e3;
-    color: #999;
+    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 
 .layout-content {
@@ -179,4 +175,62 @@ watch(route, (to, from) => {
     width: 100%;
   }
 }
+</style>
+<style>
+.app-win{
+  color: #999;
+}
+body.default .app-win{
+  background-color: #fdfcf8;
+}
+body.green .app-win{
+  background-color: #cddfcd;
+}
+body.blue .app-win{
+  background-color: #cfdde1;
+}
+body.pink .app-win{
+  background-color: #ebcece;
+}
+body.gray .app-win{
+  background-color: #d0d0d0;
+}
+body.sepia .app-win{
+  background-color: #ede7da;
+}
+body.dark .app-win{
+  background-color: #1a1a1a;
+}
+
+/*默认模式*/
+body.default .layout-nav{
+  background-color: #e8e7e3;
+}
+body.default .layout-footer{
+  background-color: #e8e7e3;
+}
+
+/**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色*/
+body.dark .app-win{
+  color: #d4d4d4;
+}
+body.dark .layout-nav{
+  background-color: #1a1a1a;
+}
+body.dark .layout-footer{
+  background-color: #1a1a1a;
+}
+body.dark .reading-area{
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+}
+body.dark .chapter-content{
+  color: #646161;
+}
+body.dark .chapter-nav-btn{
+  background-color: #1a1a1a;
+  color: #646161;
+  border: 1px solid #333;
+}
+
 </style>

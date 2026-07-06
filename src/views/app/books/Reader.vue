@@ -343,15 +343,6 @@ window.addEventListener('message', (event) => {
   transition: all 0.3s;
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .reader-title {
   font-size: 16px;
   font-weight: bold;
@@ -366,6 +357,7 @@ window.addEventListener('message', (event) => {
 .reader-content {
   padding-bottom: 40px;
   margin: 0 auto;
+  color: #333;
 }
 
 /* 阅读区域 */
@@ -384,20 +376,17 @@ window.addEventListener('message', (event) => {
 .chapter-name {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
   margin: 0 0 8px 0;
 }
 
 .chapter-meta {
   font-size: 14px;
-  color: #999;
   margin: 0;
 }
 
 .chapter-content {
   font-size: 18px;
   line-height: 1.8;
-  color: #333;
   min-height: 400px;
 }
 
@@ -410,7 +399,6 @@ window.addEventListener('message', (event) => {
   font-size: 20px;
   font-weight: bold;
   margin: 24px 0 16px 0;
-  color: #333;
 }
 
 /* 章节切换按钮 */
@@ -431,6 +419,7 @@ window.addEventListener('message', (event) => {
   cursor: pointer;
   transition: all 0.3s;
   font-size: 14px;
+  color: #646161;
 }
 
 .chapter-nav-btn:hover {
@@ -442,10 +431,6 @@ window.addEventListener('message', (event) => {
    手机设备响应式样式 (< 768px)
    ==================== */
 @media (max-width: 767px) {
-  .header-content {
-    padding: 0;
-    justify-content: space-between;
-  }
 
   .reader-title {
     font-size: 14px;
@@ -502,11 +487,6 @@ window.addEventListener('message', (event) => {
   .chapter-content h3 {
     font-size: 18px;
     margin: 20px 0 12px 0;
-    color: inherit;
-  }
-
-  .chapter-content strong {
-    color: inherit;
   }
 
   /* 章节切换按钮优化 */
@@ -520,118 +500,4 @@ window.addEventListener('message', (event) => {
     justify-content: center;
   }
 }
-</style>
-<style>
-body.default .app-win{
-  background-color: #fdfcf8;
-}
-body.green .app-win{
-  background-color: #cddfcd;
-}
-body.blue .app-win{
-  background-color: #cfdde1;
-}
-body.pink .app-win{
-  background-color: #ebcece;
-}
-body.gray .app-win{
-  background-color: #d0d0d0;
-}
-body.sepia .app-win{
-  background-color: #ede7da;
-}
-body.dark .app-win{
-  background-color: #1a1a1a;
-}
-
-/**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色*/
-body.dark .layout-nav{
-  background-color: #1a1a1a;
-  color: #d4d4d4;
-}
-body.dark .reader-container{
-  background-color: #1a1a1a;
-  color: #d4d4d4;
-}
-body.dark .reading-area{
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-}
-body.dark .chapter-content{
-  color: #646161;
-}
-body.dark .chapter-nav-btn{
-  background-color: #1a1a1a;
-  color: #646161;
-  border: 1px solid #333;
-}
-/**绿色*/
-body.green .layout-nav{
-  background-color: #cddfcd;
-  color: #333;
-}
-body.green .reader-container{
-  background-color: #cddfcd;
-  color: #333;
-}
-body.green .chapter-content{
-  color: #333;
-}
-body.green .chapter-nav-btn{
-  background-color: #cddfcd;
-  color: #333;
-  border: 1px solid #333;
-}
-/**蓝色*/
-body.blue .layout-nav{
-  background-color: #cfdde1;
-  color: #333;
-}
-body.blue .reader-container{
-  background-color: #cfdde1;
-  color: #333;
-}
-body.blue .chapter-content{
-  color: #333;
-}
-body.blue .chapter-nav-btn{
-  background-color: #cfdde1;
-  color: #333;
-  border: 1px solid #333;
-}
-/**粉色*/
-body.pink .layout-nav{
-  background-color: #ebcece;
-  color: #333;
-}
-body.pink .reader-container{
-  background-color: #ebcece;
-  color: #333;
-}
-body.pink .chapter-content{
-  color: #333;
-}
-body.pink .chapter-nav-btn{
-  background-color: #ebcece;
-  color: #333;
-  border: 1px solid #333;
-}
-/**灰色*/
-body.gray .layout-nav{
-  background-color: #d0d0d0;
-  color: #333;
-}
-body.gray .reader-container{
-  background-color: #d0d0d0;
-  color: #333;
-}
-body.gray .chapter-content{
-  color: #333;
-}
-body.gray .chapter-nav-btn{
-  background-color: #d0d0d0;
-  color: #333;
-  border: 1px solid #333;
-}
-
 </style>
