@@ -134,7 +134,7 @@ onMounted(async () => {
     await nextTick(() => {
         // console.log('DOM 渲染完成');
         // 从 localStorage 读取并校验主题，只允许三种合法值
-        readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
+        readerSettings.value.theme = `${localStorage.getItem('readerTheme') || 'default'}`;
         // 从 URL 参数中读取分页信息
         let index = route.query.index as string;
         let size = route.query.size as string;
