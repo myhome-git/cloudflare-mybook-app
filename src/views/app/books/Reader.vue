@@ -411,6 +411,10 @@ window.addEventListener('message', (event) => {
   transition: all 0.3s;
   font-size: 14px;
   color: #646161;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .chapter-nav-btn:hover {

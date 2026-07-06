@@ -114,6 +114,8 @@ watch(route, (to, from) => {
     overflow-x: auto;
     --appwin--bg-color-rgb: 253, 252, 248;
     --appwin--bg-color-opacity: 0.2;
+    --appwin--border-color-rgb: 0, 0, 0;
+    --appwin--border-color-opacity: 0.2;
 }
 
 .x-container {
