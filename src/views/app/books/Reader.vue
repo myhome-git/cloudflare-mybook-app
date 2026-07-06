@@ -91,7 +91,6 @@ import {
 import request from "@/utils/request.js";
 import { isValidValue, handleItemClick } from "@/utils/utils.js";
 import ReaderSetting from './ReaderSetting.vue';
-import { file } from '@babel/types';
 
 const router = useRouter();
 const route = useRoute();
@@ -100,11 +99,14 @@ const route = useRoute();
 const chapters = ref<any[]>([]);
 const loading = ref(false);
 
-// 阅读器设置
+// 主题设置
 const readerSettings = ref({
-  theme: '',
+  theme: 'default',
   fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
   show: false
+});
+watch(() => readerSettings.value.theme, (newTheme) => {
+  document.body.className = newTheme;
 });
 
 // 当前章节信息
@@ -299,6 +301,7 @@ const goToChapter = (id: string) => {
 };
 
 onMounted(() => {
+  readerSettings.value.theme = `${localStorage.getItem('readerTheme')}` || 'default';
   file_path.value = `${route.query.file_path}`;
   folder.value = `${route.query.folder}`;
   folder_index.value = `${route.query.folder_index}`;
@@ -307,6 +310,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('message', () => {});
 });
 
 // 监听章节 ID 变化，重新加载内容
