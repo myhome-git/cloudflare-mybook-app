@@ -289,10 +289,10 @@ onMounted(async () => {
 
 /* 章节目录列表 */
 .catalog-grid {
-  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  background-color: transparent;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  padding: 8px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); */
+  /* padding: 8px; */
   overflow-y: auto;
 }
 

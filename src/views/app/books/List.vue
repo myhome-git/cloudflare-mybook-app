@@ -92,11 +92,13 @@ const onChange = (current: number, pageSize: number) => {
 .novel-list {
   border-radius: 6px;
   padding: 8px 0;
-  border: 1px solid #eee;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .novel-list-item {
-  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  background-color: transparent;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -165,14 +167,26 @@ const onChange = (current: number, pageSize: number) => {
     text-align: left; /* 确保文字左对齐 */
   }
 }
-
-body.default .novel-list-item .novel-list-item-title{
-  color: #1677ff;
-}
 body.dark .novel-list-container{
   background-color: inherit;
 }
-body.dark .novel-list-item .novel-list-item-title{
+body.dark .novel-list-item-title{
   color: white;
+}
+body.default .novel-list, 
+body.green .novel-list, 
+body.blue .novel-list, 
+body.pink .novel-list, 
+body.gray .novel-list, 
+body.sepia .novel-list{
+  color: #999;
+}
+body.default .novel-list-item-title, 
+body.green .novel-list-item-title, 
+body.blue .novel-list-item-title, 
+body.pink .novel-list-item-title, 
+body.gray .novel-list-item-title, 
+body.sepia .novel-list-item-title{
+  color: #333;
 }
 </style>
