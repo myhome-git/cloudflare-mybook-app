@@ -145,8 +145,8 @@ const chapterId = ref(``)
 // 数据源
 const apiURL = `/api/app/books/detail`;
 const isServerResult = ref({
-    status: 0,
-    message: ''
+    status: 100,
+    message: 'Loading...'
 });
 
 const handleGetURL = () => {
@@ -167,7 +167,7 @@ const handleGetURL = () => {
 
 const handleGetBookChapters = async () => {
     const isServerResultValue = isServerResult.value;
-    isServerResultValue.status = 0;
+    isServerResultValue.status = 100;
     isServerResultValue.message = 'Loading...';
     try {
         // 先获取章节目录列表

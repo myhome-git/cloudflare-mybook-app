@@ -5,7 +5,7 @@
         <!-- 主题切换 -->
         <a-dropdown :trigger="['click']">
           <a-button size="large">
-            <SettingOutlined />主题
+            <SettingOutlined />主题-{{ readerSettings.theme }}
           </a-button>
           <template #overlay>
             <a-menu @click="handleSettingChange">
@@ -71,8 +71,8 @@ const route = useRoute();
 
 // 阅读器设置
 const readerSettings = ref({
-  theme: 'light' as 'light' | 'sepia' | 'dark',
-  fontSize: `${localStorage.getItem('readerFontSize') || '100%'}`
+  theme: 'green',
+  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`
 });
 
 // 主题设置变化
