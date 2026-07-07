@@ -23,7 +23,6 @@
 }
 .app-logo b{
 	font-size: 16px;
-	color: #666;
 	font-weight: normal;
 }
 /* ==================== 
