@@ -48,7 +48,7 @@ const computedDataSource = computed(() => {
 });
 
 const goHome = () => {
-    location.href = '/app/books/index?index=1&classId=home';
+    location.href = '/';
 };
 </script>
 <style>
