@@ -166,6 +166,9 @@ const onChange = (current: number, pageSize: number) => {
   }
 }
 
+body.default .novel-list-item .novel-list-item-title{
+  color: #1677ff;
+}
 body.dark .novel-list-container{
   background-color: inherit;
 }

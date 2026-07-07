@@ -177,7 +177,9 @@ onMounted(async () => {
 .detail-header {
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   padding: 40px 20px;
-  border-bottom: 1px solid #ddd;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .header-content {
@@ -296,13 +298,16 @@ onMounted(async () => {
 
 .chapter-item {
   padding: 12px 16px;
-  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
   font-size: 14px;
   margin-bottom: 8px;
   line-height: 1.5;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .chapter-item:hover {

@@ -145,8 +145,8 @@ onUnmounted(() => {
     overflow-x: auto;
     --appwin--bg-color-rgb: 253, 252, 248;
     --appwin--bg-color-opacity: 0.3;
-    --appwin--border-color-rgb: 0, 0, 0;
-    --appwin--border-color-opacity: 0.2;
+    --appwin--border-color-rgb: 204, 204, 204;
+    --appwin--border-color-opacity: 0.35;
 }
 
 .x-container {
@@ -218,6 +218,8 @@ body .layout-nav{
 }
 body.default .app-win{
   background-color: #fdfcf8;
+  --appwin--bg-color-rgb: 238, 238, 238;
+  --appwin--bg-color-opacity: 0.5;
 }
 body.green .app-win{
   background-color: #cddfcd;
@@ -239,7 +241,7 @@ body.dark .app-win{
   color: #cddfcd;
 }
 
-body.green .app-win, body.blue .app-win, body.pink .app-win, body.gray .app-win, body.sepia .app-win{
+body.default .app-win, body.green .app-win, body.blue .app-win, body.pink .app-win, body.gray .app-win, body.sepia .app-win{
   color: #333;
 }
 

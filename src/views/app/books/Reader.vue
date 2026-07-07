@@ -12,7 +12,6 @@
           <ArrowLeftOutlined />上一章
         </button>
         <button 
-          v-if="prevChapterId" 
           class="chapter-nav-btn"
           @click="goToChapters()"
         >
@@ -42,7 +41,7 @@
             <p class="chapter-meta">作者：{{ author }} , 字数：{{ chapterWordCount }}</p>
           </div>
           
-          <div class="chapter-content" ref="contentRef" :style="{ fontSize: readerSettings.fontSize }">
+          <div class="chapter-content" ref="contentRef">
             <div v-html="renderContent(currentContent)"></div>
           </div>
         </div>
@@ -56,7 +55,6 @@
             <ArrowLeftOutlined /> 上一章
           </button>
           <button 
-            v-if="prevChapterId" 
             class="chapter-nav-btn"
             @click="goToChapters()"
           >
@@ -298,8 +296,11 @@ const goToChapter = (id: string) => {
 
 // 监听window.parent.postMessage消息
 const messageEventListener = (event: MessageEvent) => {
+  // console.log('Received message:', event.data);
   if (event.data.type === 'themeChange') {
     readerSettings.value.theme = event.data.theme;
+  } else if (event.data.type === 'fontSizeChange') {
+    readerSettings.value.fontSize = event.data.fontSize;
   }
 };
 
@@ -337,29 +338,21 @@ watch(() => route.query.id, async (newId) => {
   padding: 20px;
   text-align: center;
 }
-.reader-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
 
 /* 阅读器内容 */
 .reader-content {
   padding-bottom: 40px;
   margin: 0 auto;
-  color: #333;
 }
 
 /* 阅读区域 */
 .reading-area {
   padding: 20px;
   font-size: 20px;
-  border: 1px solid #eee;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .chapter-info {
@@ -368,18 +361,17 @@ watch(() => route.query.id, async (newId) => {
 }
 
 .chapter-name {
-  font-size: 24px;
   font-weight: bold;
   margin: 0 0 8px 0;
+  font-size: 120%;
 }
 
 .chapter-meta {
-  font-size: 14px;
+  font-size: 80%;
   margin: 0;
 }
 
 .chapter-content {
-  font-size: 18px;
   line-height: 1.8;
   min-height: 400px;
 }
@@ -407,13 +399,10 @@ watch(() => route.query.id, async (newId) => {
   flex: 1;
   height: 40px;
   padding: 0;
-  background: #f5f5f5;
-  border: 1px solid #ddd;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 14px;
-  color: #646161;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-width: 1px;
   border-style: solid;
@@ -421,20 +410,14 @@ watch(() => route.query.id, async (newId) => {
 }
 
 .chapter-nav-btn:hover {
-  background: #e8e7e3;
-  border-color: #3f3f3f;
+  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+  border-color: rgba(var(--appwin--border-color-rgb), 1);
 }
 
 /* ==================== 
    手机设备响应式样式 (< 768px)
    ==================== */
 @media (max-width: 767px) {
-
-  .reader-title {
-    font-size: 14px;
-    max-width: 120px;
-    white-space: nowrap;
-  }
 
   .header-actions {
     gap: 4px;
@@ -464,16 +447,10 @@ watch(() => route.query.id, async (newId) => {
   }
 
   .chapter-name {
-    font-size: 19px;
     margin-bottom: 6px;
   }
 
-  .chapter-meta {
-    font-size: 13px;
-  }
-
   .chapter-content {
-    font-size: 16px;
     line-height: 1.75;
   }
 
@@ -483,7 +460,6 @@ watch(() => route.query.id, async (newId) => {
   }
 
   .chapter-content h3 {
-    font-size: 18px;
     margin: 20px 0 12px 0;
   }
 
