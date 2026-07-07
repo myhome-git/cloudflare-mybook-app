@@ -30,7 +30,7 @@
 // @ts-ignore
 import SystemConfig from "@/SystemConfig.js";
 import { RouterLink, RouterView } from 'vue-router';
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { isValidValue, handleDecodemultiple, handleItemClick } from "@/utils/utils.js";
 // @ts-ignore
@@ -40,6 +40,7 @@ import Header from './layout/Header.vue';
 import Nav from './layout/Nav.vue';
 import Content from './layout/Content.vue';
 import Footer from './layout/Footer.vue';
+
 const route = useRoute();
 const router = useRouter();
 
@@ -86,17 +87,47 @@ const handleGetListNav = () => {
     });
 };
 
-// 挂载事件
-onMounted(async () => {
-    // 使用 $nextTick 确保 DOM 已经渲染完成
-    await nextTick(() => {
-        handleGetListNav();
-    });
+// 主题设置
+const readerSettings = ref({
+  theme: 'default',
+  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
+  show: false
+});
+// 监听主题设置变化
+watch(() => readerSettings.value.theme, (newValue) => {
+  document.body.className = newValue;
+  localStorage.setItem('readerTheme', newValue);
 });
 
 // 监听路由变化，重新获取所有数据
 watch(route, (to, from) => {
     // console.log('Route changed:', to.fullPath);
+});
+
+// 监听window.parent.postMessage消息
+const messageEventListener = (event: MessageEvent) => {
+  if (event.data.type === 'themeChange') {
+    readerSettings.value.theme = event.data.theme;
+    } else if (event.data.type === 'fontSizeChange') {
+    readerSettings.value.fontSize = event.data.fontSize;
+  }
+};
+
+// 挂载事件
+onMounted(async () => {
+    // 使用 $nextTick 确保 DOM 已经渲染完成
+    await nextTick(() => {
+        if(localStorage.getItem('readerTheme')){
+            readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
+        }
+        handleGetListNav();
+
+        // 监听window.parent.postMessage消息
+        window.addEventListener('message', messageEventListener);
+    });
+});
+onUnmounted(() => {
+  window.removeEventListener('message', messageEventListener);
 });
 </script>
 <style scoped>

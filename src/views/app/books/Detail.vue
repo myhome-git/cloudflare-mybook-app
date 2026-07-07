@@ -175,7 +175,7 @@ onMounted(async () => {
 
 /* 头部信息 */
 .detail-header {
-  background: linear-gradient(135deg, #e8e7e3 0%, #f5f5f5 100%);
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   padding: 40px 20px;
   border-bottom: 1px solid #ddd;
 }
@@ -269,7 +269,6 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -290,7 +289,7 @@ onMounted(async () => {
 
 /* 章节目录列表 */
 .catalog-grid {
-  background: #fff;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   padding: 8px;
@@ -299,12 +298,11 @@ onMounted(async () => {
 
 .chapter-item {
   padding: 12px 16px;
-  background: #f9f9f9;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
   font-size: 14px;
-  color: #666;
   margin-bottom: 8px;
   line-height: 1.5;
 }
@@ -419,10 +417,6 @@ onMounted(async () => {
    手机设备响应式样式 (< 768px)
    ==================== */
 @media (max-width: 767px) {
-  /* 整体容器 */
-  .novel-detail-container {
-    background: #fdfcf8;
-  }
 
   /* 加载状态优化 */
   .loading-state {

@@ -1,6 +1,6 @@
 <template>
     <div class="app-nav">
-        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="router.push({ path: '/app/books/index', query: { index: '1', classId: 'home' } })">
+        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="goHome()">
             首页
         </div>
         <template v-if="computedDataSource.length > 0">
@@ -46,6 +46,10 @@ const computedDataSource = computed(() => {
     }
     return [];
 });
+
+const goHome = () => {
+    location.href = '/app/books/index?index=1&classId=home';
+};
 </script>
 <style>
 .app-nav {

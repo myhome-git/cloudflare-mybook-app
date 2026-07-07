@@ -8,12 +8,13 @@
 import { ref, computed } from 'vue';
 import Logo from './Logo.vue';
 import Search from './Search.vue';
-import HeaderLogin from './HeaderLogin.vue';
+import ReaderSetting from '../books/ReaderSetting.vue';
 
 const emit = defineEmits(["onSearch"]);
 const onSearch = (value: string) => {
     emit('onSearch', value);
 }
+
 </script>
 <style scoped>
 .app-header {

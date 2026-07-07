@@ -41,17 +41,6 @@ import List from './List.vue';
 const route = useRoute();
 const router = useRouter();
 
-// 主题设置
-const readerSettings = ref({
-  theme: '',
-  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
-  show: false
-});
-// 监听主题和字体大小变化
-watch(() => readerSettings.value.theme, (newTheme) => {
-  document.body.className = newTheme;
-});
-
 // 数据源
 const apiURL = `/api/app/books/list`;
 const dataSource = ref([]);
@@ -133,8 +122,6 @@ onMounted(async () => {
     // 使用 $nextTick 确保 DOM 已经渲染完成
     await nextTick(() => {
         // console.log('DOM 渲染完成');
-        // 从 localStorage 读取并校验主题，只允许三种合法值
-        readerSettings.value.theme = `${localStorage.getItem('readerTheme') || 'default'}`;
         // 从 URL 参数中读取分页信息
         let index = route.query.index as string;
         let size = route.query.size as string;

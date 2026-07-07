@@ -78,29 +78,36 @@ const readerSettings = ref({
 // 主题设置变化
 const handleSettingChange = (e: any) => {
   readerSettings.value.theme = e.key;
-  localStorage.setItem('readerTheme', e.key);
 };
-// 监听主题和字体大小变化
-watch(() => readerSettings.value.theme, (newTheme) => {
-  document.body.className = newTheme;
-});
-watch(() => readerSettings.value.fontSize, (newFontSize) => {
-  document.body.style.fontSize = newFontSize;
-});
-
-// 字体大小变化
+// 字体大小设置变化
 const handleFontSizeChange = (e: any) => {
   readerSettings.value.fontSize = e.key;
-  localStorage.setItem('readerFontSize', e.key);
+};
+// 监听主题变化
+watch(() => readerSettings.value.theme, (newValue) => {
+  document.body.className = newValue;
+  localStorage.setItem('readerTheme', newValue);
+  window.parent.postMessage(
+    {
+      type: 'themeChange',
+      theme: newValue
+    },
+    '*'
+  );
+});
+// 监听字体大小变化
+watch(() => readerSettings.value.fontSize, (newValue) => {
+  document.body.style.fontSize = newValue;
+  localStorage.setItem('readerFontSize', newValue);
   // 发送消息给父组件，通知字体大小变化
   window.parent.postMessage(
     {
       type: 'fontSizeChange',
-      fontSize: e.key
+      fontSize: newValue
     },
     '*'
   );
-};
+});
 
 onMounted(() => {
 

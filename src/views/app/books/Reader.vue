@@ -105,9 +105,6 @@ const readerSettings = ref({
   fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
   show: false
 });
-watch(() => readerSettings.value.theme, (newTheme) => {
-  document.body.className = newTheme;
-});
 
 // 当前章节信息
 const currentChapterId = ref('');
@@ -299,17 +296,24 @@ const goToChapter = (id: string) => {
   window.scrollTo(0, 0);
 };
 
+// 监听window.parent.postMessage消息
+const messageEventListener = (event: MessageEvent) => {
+  if (event.data.type === 'themeChange') {
+    readerSettings.value.theme = event.data.theme;
+  }
+};
+
 onMounted(() => {
-  readerSettings.value.theme = `${localStorage.getItem('readerTheme')}` || 'default';
   file_path.value = `${route.query.file_path}`;
   folder.value = `${route.query.folder}`;
   folder_index.value = `${route.query.folder_index}`;
   chapterId.value = `${route.query.id}`;
   handleGetURL()
+  window.addEventListener('message', messageEventListener);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('message', () => {});
+  window.removeEventListener('message', messageEventListener);
 });
 
 // 监听章节 ID 变化，重新加载内容
@@ -321,14 +325,6 @@ watch(() => route.query.id, async (newId) => {
   }
 });
 
-// 监听window.parent.postMessage消息
-window.addEventListener('message', (event) => {
-  if (event.data.type === 'themeChange') {
-    readerSettings.value.theme = event.data.theme;
-  } else if (event.data.type === 'fontSizeChange') {
-    readerSettings.value.fontSize = event.data.fontSize;
-  }
-});
 </script>
 
 <style scoped>
