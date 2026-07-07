@@ -46,6 +46,7 @@
               <a-menu-item key="20px">20</a-menu-item>
               <a-menu-item key="22px">22</a-menu-item>
               <a-menu-item key="24px">24</a-menu-item>
+              <a-menu-item key="24px">26</a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
