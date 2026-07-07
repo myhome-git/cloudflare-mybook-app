@@ -8,7 +8,6 @@
 import { ref, computed } from 'vue';
 import Logo from './Logo.vue';
 import Search from './Search.vue';
-import ReaderSetting from '../books/ReaderSetting.vue';
 
 const emit = defineEmits(["onSearch"]);
 const onSearch = (value: string) => {
