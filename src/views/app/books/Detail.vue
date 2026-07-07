@@ -211,14 +211,12 @@ onMounted(async () => {
 .novel-title-large {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
   margin: 0 0 12px 0;
   line-height: 1.3;
 }
 
 .novel-author-large {
   font-size: 16px;
-  color: #999;
   margin: 0 0 16px 0;
 }
 

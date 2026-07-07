@@ -107,12 +107,6 @@ const onChange = (current: number, pageSize: number) => {
 .novel-list-item .novel-list-item-title {
   display: flex;
   align-items: center;
-  color: #0969da;
-  text-shadow: 
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
 }
 .novel-list-item:last-child {
   border-bottom: none;

@@ -236,6 +236,7 @@ body.sepia .app-win{
 }
 body.dark .app-win{
   background-color: #1a1a1a;
+  color: #cddfcd;
 }
 
 body.green .app-win, body.blue .app-win, body.pink .app-win, body.gray .app-win, body.sepia .app-win{
