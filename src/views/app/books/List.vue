@@ -84,12 +84,12 @@ const onChange = (current: number, pageSize: number) => {
 
 <style scoped>
 .novel-list-container {
-  margin: 0 auto;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  margin: 0px auto;
 }
 
 /* 小说列表 - Markdown 风格 */
 .novel-list {
-  background-color: #fff;
   border-radius: 6px;
   padding: 8px 0;
   border: 1px solid #eee;
@@ -149,7 +149,7 @@ const onChange = (current: number, pageSize: number) => {
 .a-page-box {
   text-align: center;
   padding: 24px 0;
-  background-color: #e6f4ff;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 
 @media screen and (min-width: 768px) {

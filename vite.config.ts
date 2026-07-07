@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
       allowedHosts: true,
       proxy: {
         "/api": {
-          target: "http://localhost:8787",
+          target: "http://localhost:3000",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, "/api")
         }

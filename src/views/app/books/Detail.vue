@@ -64,7 +64,7 @@
     </template>
     <template v-else>
       <div class="no-data">
-        <p>系统提示：{{ isServerResult.message }}</p>
+        <span>{{ isServerResult.message }}</span>
       </div>
     </template>
   </div>
@@ -170,9 +170,7 @@ onMounted(async () => {
 }
 
 .no-data {
-  font-size: 16px;
   padding: 20px;
-  margin-top: 20px;
 }
 
 /* 头部信息 */
@@ -180,7 +178,6 @@ onMounted(async () => {
   background: linear-gradient(135deg, #e8e7e3 0%, #f5f5f5 100%);
   padding: 40px 20px;
   border-bottom: 1px solid #ddd;
-  margin-top: 20px;
 }
 
 .header-content {

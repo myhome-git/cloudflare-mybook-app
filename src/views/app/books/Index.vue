@@ -179,9 +179,8 @@ watch(route, (to, from) => {
 </script>
 <style scoped>
 .loading-box {
-    line-height: 40px;
-    color: #999;
+    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
     border: 1px solid #e8e8e8;
-    padding: 0px 20px;
+    padding: 20px 20px;
 }
 </style>

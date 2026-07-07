@@ -17,6 +17,7 @@ import { ref, computed } from 'vue';
     display: grid;
     gap: 26px;
     align-items: start;
+    margin: 20px 0px;
 }
 
 .c-layout {}

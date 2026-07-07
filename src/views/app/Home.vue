@@ -179,7 +179,7 @@ watch(route, (to, from) => {
 }
 </style>
 <style>
-.app-win{
+body .app-win{
   color: #999;
 }
 body .layout-nav{
@@ -205,6 +205,10 @@ body.sepia .app-win{
 }
 body.dark .app-win{
   background-color: #1a1a1a;
+}
+
+body.green .app-win, body.blue .app-win, body.pink .app-win, body.gray .app-win, body.sepia .app-win{
+  color: #333;
 }
 
 /*默认模式*/
