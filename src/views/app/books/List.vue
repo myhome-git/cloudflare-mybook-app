@@ -96,15 +96,23 @@ const onChange = (current: number, pageSize: number) => {
 }
 
 .novel-list-item {
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
-  border-bottom: 1px dashed #e1e4e8;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 .novel-list-item .novel-list-item-title {
   display: flex;
   align-items: center;
   color: #0969da;
+  text-shadow: 
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
 }
 .novel-list-item:last-child {
   border-bottom: none;
@@ -133,7 +141,6 @@ const onChange = (current: number, pageSize: number) => {
 
 .novel-list-title {
   font-weight: 500;
-  color: #0969da;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -163,5 +170,12 @@ const onChange = (current: number, pageSize: number) => {
     flex: 1;
     text-align: left; /* 确保文字左对齐 */
   }
+}
+
+body.dark .novel-list-container{
+  background-color: inherit;
+}
+body.dark .novel-list-item .novel-list-item-title{
+  color: white;
 }
 </style>
