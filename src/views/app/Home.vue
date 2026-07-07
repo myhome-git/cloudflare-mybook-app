@@ -143,10 +143,6 @@ onUnmounted(() => {
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: auto;
-    --appwin--bg-color-rgb: 253, 252, 248;
-    --appwin--bg-color-opacity: 0.3;
-    --appwin--border-color-rgb: 204, 204, 204;
-    --appwin--border-color-opacity: 0.35;
 }
 
 .x-container {
@@ -167,7 +163,7 @@ onUnmounted(() => {
 }
 
 .layout-nav {
-    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+    background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 0.2));
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
@@ -212,6 +208,10 @@ onUnmounted(() => {
 <style>
 body .app-win{
   color: #999;
+  --appwin--bg-color-rgb: 253, 252, 248;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--border-color-rgb: 204, 204, 204;
+  --appwin--border-color-opacity: 0.35;
 }
 body .layout-nav{
   color: #666;
@@ -219,25 +219,38 @@ body .layout-nav{
 body.default .app-win{
   background-color: #fdfcf8;
   --appwin--bg-color-rgb: 238, 238, 238;
-  --appwin--bg-color-opacity: 0.5;
 }
 body.green .app-win{
   background-color: #cddfcd;
+  --appwin--bg-color-rgb: 129, 169, 129;
+  --appwin--border-color-rgb: 129, 169, 129;
 }
 body.blue .app-win{
   background-color: #cfdde1;
+  --appwin--bg-color-rgb: 151, 180, 189;
+  --appwin--border-color-rgb: 151, 180, 189;
 }
 body.pink .app-win{
   background-color: #ebcece;
+  --appwin--bg-color-rgb: 193, 153, 153;
+  --appwin--border-color-rgb: 193, 153, 153;
 }
 body.gray .app-win{
   background-color: #d0d0d0;
+  --appwin--bg-color-rgb: 151, 151, 151;
+  --appwin--border-color-rgb: 151, 151, 151;
 }
 body.sepia .app-win{
   background-color: #ede7da;
+  --appwin--bg-color-rgb: 185, 172, 145;
+  --appwin--border-color-rgb: 185, 172, 145;
 }
 body.dark .app-win{
   background-color: #1a1a1a;
+  --appwin--bg-color-rgb: 255, 255, 255;
+  --appwin--bg-color-opacity: 0.1;
+  --appwin--border-color-rgb: 255, 255, 255;
+  --appwin--border-color-opacity: 0.1;
   color: #cddfcd;
 }
 
@@ -258,14 +271,18 @@ body.dark .app-win{
   color: #d4d4d4;
 }
 body.dark .layout-nav{
-  color: #ddd;
+  background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
+  color: #777;
 }
 body.dark .layout-footer{
-  background-color: #1a1a1a;
+  background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
 }
 body.dark .reading-area{
-  background-color: #1a1a1a;
+  background-color: rgba(var(--appwin--bg-color-rgb), 0);
   border: 1px solid #333;
+}
+body.dark .chapter-info{
+  color: #646161;
 }
 body.dark .chapter-content{
   color: #646161;

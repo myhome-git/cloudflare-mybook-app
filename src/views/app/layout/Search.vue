@@ -20,14 +20,17 @@ const handleClick = () => {
 </script>
 <style scoped>
 .x-head-search {
+    max-width: 400px;
     flex: 1;
-    border: 1px solid #ccc;
     border-radius: 20px;
     position: relative;
     margin: auto;
-    color: #ccc;
     transition: all 0.3s ease-in-out 0s;
     margin: 0px 20px;
+    background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
     /*box-shadow: 0px 0px 5px rgba(0,0,0,0.2);*/
 }
 
@@ -48,6 +51,11 @@ const handleClick = () => {
     width: calc(100% - 62px);
     padding-left: 15px;
     background-color: transparent;
+}
+.x-head-search input:focus {
+  outline: none;
+  /* 使用阴影模拟外发光效果，不会引起布局抖动 */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
 }
 
 .x-head-search .x-search-btn {
@@ -71,8 +79,9 @@ const handleClick = () => {
 
 .x-head-search.action-focus,
 .x-head-search:hover {
-    color: #3F3F3F;
-    border: 1px solid #3F3F3F;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 </style>

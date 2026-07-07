@@ -167,7 +167,9 @@ watch(route, (to, from) => {
 <style scoped>
 .loading-box {
     background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
-    border: 1px solid #e8e8e8;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
     padding: 20px 20px;
 }
 </style>

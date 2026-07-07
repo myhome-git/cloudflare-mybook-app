@@ -12,8 +12,8 @@
 .app-logo{
 	height: 40px;
 	line-height: 20px;
-	margin: auto;
 	flex: 1;
+	max-width: 200px;
 }
 .app-logo span{
 	font-weight: bold;

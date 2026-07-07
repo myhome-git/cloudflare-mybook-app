@@ -175,7 +175,7 @@ onMounted(async () => {
 
 /* 头部信息 */
 .detail-header {
-  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  background-color: rgba(var(--appwin--bg-color-rgb), 0);
   padding: 40px 20px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -276,7 +276,6 @@ onMounted(async () => {
 .section-title {
   font-size: 20px;
   font-weight: bold;
-  color: #333;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -537,74 +536,4 @@ onMounted(async () => {
   }
 }
 
-/* ==================== 
-   小屏手机响应式样式 (< 480px)
-   ==================== */
-@media (max-width: 479px) {
-  /* 头部信息优化 */
-  .detail-header {
-    padding: 16px 12px;
-  }
-
-  .novel-cover-large {
-    width: 100px;
-    height: 140px;
-  }
-
-  .novel-title-large {
-    font-size: 18px;
-  }
-
-  .novel-author-large {
-    font-size: 13px;
-  }
-
-  .novel-stats {
-    gap: 8px;
-  }
-
-  .stat-item {
-    font-size: 11px;
-  }
-
-  .novel-desc-large {
-    font-size: 12px;
-  }
-
-  /* 操作按钮优化 */
-  .action-buttons {
-    gap: 8px;
-  }
-
-  .action-buttons :deep(.ant-btn) {
-    padding: 8px 16px;
-    font-size: 13px;
-  }
-
-  /* 目录区域优化 */
-  .catalog-section {
-    padding: 16px 12px;
-  }
-
-  .section-title {
-    font-size: 16px;
-  }
-
-  .section-title .iconfont {
-    font-size: 18px;
-  }
-
-  /* 空状态优化 */
-  .empty-state {
-    height: 250px;
-  }
-
-  .empty-state .iconfont {
-    font-size: 40px;
-  }
-
-  .empty-state p {
-    font-size: 13px;
-  }
-}
 </style>

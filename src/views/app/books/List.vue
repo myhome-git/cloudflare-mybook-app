@@ -168,10 +168,11 @@ const onChange = (current: number, pageSize: number) => {
   }
 }
 body.dark .novel-list-container{
-  background-color: inherit;
+  background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
+  color: #777;
 }
 body.dark .novel-list-item-title{
-  color: white;
+  color: #999;
 }
 body.default .novel-list, 
 body.green .novel-list, 

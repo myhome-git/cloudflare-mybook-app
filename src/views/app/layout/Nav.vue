@@ -77,7 +77,7 @@ const goHome = () => {
     top: 0;
     border-left-width: 1px;
     border-left-style: solid;
-    border-left-color: #ddd;
+    border-left-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
 }
 .app-nav::after {
     display: block;
@@ -88,7 +88,7 @@ const goHome = () => {
     top: 0;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: #ddd;
+    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
 }
 .app-nav .li::after {
     display: block;
@@ -100,7 +100,7 @@ const goHome = () => {
     height: 16px;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: #ddd;
+    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
 }
 
 .app-nav .li:first-child::before {
@@ -175,12 +175,12 @@ const goHome = () => {
 body.dark .app-nav::before {
     display: block;
     content: '';
-    border-left-color: #999;
+    border-left-color: rgba(var(--appwin--bg-color-rgb), 0.1);
 }
 body.dark .app-nav::after {
     display: block;
     content: '';
-    border-right-color: #999;
+    border-right-color: rgba(var(--appwin--bg-color-rgb), 0.1);
 }
 body.dark .app-nav .li::before {
     display: block;
