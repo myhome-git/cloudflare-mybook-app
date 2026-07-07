@@ -72,7 +72,7 @@
         </div>
        </template>
        <template v-else>
-          <div>{{ isServerResult.message }}</div>
+          <div class="load-msg">{{ isServerResult.message }}</div>
         </template>
       
     </div>
@@ -332,7 +332,11 @@ watch(() => route.query.id, async (newId) => {
   min-height: 100vh;
   transition: all 0.3s;
 }
-
+.reader-container .load-msg{
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  padding: 20px;
+  text-align: center;
+}
 .reader-title {
   font-size: 16px;
   font-weight: bold;
