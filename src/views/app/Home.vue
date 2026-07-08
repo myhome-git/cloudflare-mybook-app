@@ -118,7 +118,6 @@ onMounted(async () => {
     // 使用 $nextTick 确保 DOM 已经渲染完成
     await nextTick(() => {
         if(localStorage.getItem('readerTheme')){
-          console.log(`test`)
             readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
         }
         handleGetListNav();

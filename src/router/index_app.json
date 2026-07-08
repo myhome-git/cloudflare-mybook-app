@@ -11,9 +11,16 @@
                 "source": "/app/Welcome.vue"
             },
             {
-                "path": "/books/index",
+                "path": "/books",
                 "name": "小说列表",
-                "source": "/app/books/Index.vue"
+                "redirect": "/app/books/index",
+                "children": [
+                    {
+                        "path": "/books/index",
+                        "name": "小说列表",
+                        "source": "/app/books/Index.vue"
+                    }
+                ]
             },
             {
                 "path": "/books/detail",
