@@ -39,28 +39,32 @@
           </div>
         </div>
       </div>
-
-      <!-- 目录区域 -->
-      <div class="catalog-section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="iconfont icon-list"></i>
-            章节目录
-          </h2>
-        </div>
-        
-        <!-- 目录列表 - 响应式 -->
-        <div class="catalog-grid">
-          <div 
-            v-for="chapter in chapters" 
-            :key="chapter.id"
-            :class="['chapter-item', { active: currentChapterId === chapter.id }]"
-            @click="goToChapter(chapter.id)"
-          >
-            {{ chapter.title }}
+      <template v-if="chapters && chapters.length>0">
+        <!-- 目录区域 -->
+        <div class="catalog-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="iconfont icon-list"></i>
+              章节目录
+            </h2>
+          </div>
+          
+          <!-- 目录列表 - 响应式 -->
+          <div class="catalog-grid">
+            <div 
+              v-for="chapter in chapters" 
+              :key="chapter.id"
+              :class="['chapter-item', { active: currentChapterId === chapter.id }]"
+              @click="goToChapter(chapter.id)"
+            >
+              {{ chapter.title }}
+            </div>
           </div>
         </div>
-      </div>
+      </template>
+      <template v-else="">
+        <div class="no-data"><span>暂无章节</span></div>
+      </template>
     </template>
     <template v-else>
       <div class="no-data">
