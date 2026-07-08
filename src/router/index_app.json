@@ -19,18 +19,18 @@
                         "path": "/index",
                         "name": "小说列表",
                         "source": "/app/books/Index.vue"
+                    },
+                    {
+                        "path": "/detail",
+                        "name": "小说详情",
+                        "source": "/app/books/Detail.vue"
+                    },
+                    {
+                        "path": "/read",
+                        "name": "小说阅读",
+                        "source": "/app/books/Reader.vue"
                     }
                 ]
-            },
-            {
-                "path": "/books/detail",
-                "name": "小说详情",
-                "source": "/app/books/Detail.vue"
-            },
-            {
-                "path": "/books/read",
-                "name": "小说阅读",
-                "source": "/app/books/Reader.vue"
             }
         ]
     }
