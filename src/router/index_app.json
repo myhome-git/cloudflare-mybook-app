@@ -16,7 +16,7 @@
                 "redirect": "/app/books/index",
                 "children": [
                     {
-                        "path": "/books/index",
+                        "path": "/index",
                         "name": "小说列表",
                         "source": "/app/books/Index.vue"
                     }
