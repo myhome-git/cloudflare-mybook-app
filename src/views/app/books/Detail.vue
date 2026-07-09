@@ -52,7 +52,7 @@
           <!-- 目录列表 - 响应式 -->
           <div class="catalog-grid">
             <div 
-              v-for="chapter in chapters" 
+              v-for="chapter in visibleChapters" 
               :key="chapter.id"
               :class="['chapter-item', { active: currentChapterId === chapter.id }]"
               @click="goToChapter(chapter.id)"
@@ -132,6 +132,7 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
             chapters.value.push(chapter)
             return chapter;
         });
+        scheduleChunkedRender(chapters.value);
         isServerResultValue.status = 200;
         isServerResultValue.message = 'Data loaded successfully';
     }).catch((err: any) => {
@@ -143,6 +144,7 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
 // 数据状态
 const novelData = ref<any>(null);
 const chapters = ref<any[]>([]);
+const visibleChapters = ref<any[]>([]);  //当前可见的章节列表（分片渲染的目标数组）
 const currentChapterId = ref<string>('c1');
 
 // 开始阅读
@@ -166,6 +168,31 @@ onMounted(async () => {
         handleGetURL();
     });
 });
+
+/**
+ * 分片渲染核心逻辑（渐进式修改响应式数组）
+ */
+function scheduleChunkedRender(queue: any, chunkSize = 50) {
+  let index = 0;
+  visibleChapters.value = [];
+
+  function renderFrame() {
+    // 直接利用 slice 截取当前帧需要渲染的固定数量
+    const chunk = queue.slice(index, index + chunkSize);
+
+    if (chunk.length > 0) {
+      visibleChapters.value.push(...chunk);
+      index += chunkSize;
+    }
+
+    // 如果还有剩余数据，继续下一帧
+    if (index < queue.length) {
+      requestAnimationFrame(renderFrame);
+    }
+  }
+  // 启动第一帧
+  requestAnimationFrame(renderFrame);
+}
 </script>
 
 <style scoped>
