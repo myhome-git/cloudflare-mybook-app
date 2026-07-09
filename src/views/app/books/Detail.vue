@@ -125,16 +125,17 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
         params: sendParams
     }).then((data: any) => {
         isServerResultValue.status = 200;
-        const result = data;
-        novelData.value = result;
-        (result.chapters || []).map((chapter: any) => {
-            chapter.id = chapter.file;
-            chapters.value.push(chapter)
-            return chapter;
-        });
-        scheduleChunkedRender(chapters.value);
-        isServerResultValue.status = 200;
         isServerResultValue.message = 'Data loaded successfully';
+        setTimeout(() => {
+          const result = data;
+          novelData.value = result;
+          (result.chapters || []).map((chapter: any) => {
+              chapter.id = chapter.file;
+              chapters.value.push(chapter)
+              return chapter;
+          });
+          scheduleChunkedRender(chapters.value);
+        }, 100);
     }).catch((err: any) => {
         isServerResultValue.status = 500;
         isServerResultValue.message = `Error：${err.message || err.data.message}`;
