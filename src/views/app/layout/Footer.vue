@@ -10,7 +10,6 @@ import { ref, computed } from 'vue';
 <style scoped>
 .app-footer {
     padding: 20px 0;
-    font-size: 13px;
     text-align: center;
 }
 </style>

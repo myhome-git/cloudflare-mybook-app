@@ -138,16 +138,6 @@ onUnmounted(() => {
   margin: 0 auto;
 }
 
-.set-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-
 .set-actions {
   display: flex;
   gap: 8px;

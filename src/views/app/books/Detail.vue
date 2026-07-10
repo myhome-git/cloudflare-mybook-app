@@ -335,7 +335,6 @@ function scheduleChunkedRender(queue: any, chunkSize = 50) {
   border-radius: 6px;
   cursor: pointer;
   /* transition: all 0.2s; */
-  font-size: 14px;
   margin-bottom: 8px;
   line-height: 1.5;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));

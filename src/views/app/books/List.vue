@@ -138,7 +138,6 @@ const onChange = (current: number, pageSize: number) => {
 .novel-list-dot {
   display: inline-block;
   margin-right: 12px;
-  font-size: 14px;
   line-height: 1.8;
   flex-shrink: 0;
 }
@@ -149,7 +148,6 @@ const onChange = (current: number, pageSize: number) => {
   align-items: center;
   gap: 12px;
   overflow: hidden;
-  font-size: 14px;
 }
 
 .novel-list-title {

@@ -134,7 +134,7 @@ onUnmounted(() => {
 /* 这里可以添加样式，或者在全局样式中定义 */
 .app-win {
     font-family: "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "黑体", Arial, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
     width: 100%;
     height: 100%;
