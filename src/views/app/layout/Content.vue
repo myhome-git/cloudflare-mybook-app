@@ -62,6 +62,7 @@ import { ref, computed } from 'vue';
     .app-content {
         padding: 0px;
         gap: 15px;
+        margin: 0;
     }
 
     .layout-right {
@@ -82,15 +83,4 @@ import { ref, computed } from 'vue';
     }
 }
 
-/* 小屏手机响应式样式 (< 480px) */
-@media (max-width: 479px) {
-    .app-content {
-        padding: 5px;
-        gap: 10px;
-    }
-
-    .layout-left::after {
-        border-radius: 3px;
-    }
-}
 </style>
