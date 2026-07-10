@@ -232,22 +232,27 @@ body.pink .app-win{
   background-color: #ebcece;
   --appwin--bg-color-rgb: 193, 153, 153;
   --appwin--border-color-rgb: 193, 153, 153;
+  --appwin--color-hover: #743b3b;
 }
 body.gray .app-win{
   background-color: #d0d0d0;
   --appwin--bg-color-rgb: 151, 151, 151;
   --appwin--border-color-rgb: 151, 151, 151;
+  --appwin--color-hover: #3e3d3d;
 }
 body.sepia .app-win{
   background-color: #ede7da;
   --appwin--bg-color-rgb: 185, 172, 145;
   --appwin--border-color-rgb: 185, 172, 145;
+  --appwin--color-hover: #46391f;
 }
 body.dark .app-win{
   color: #cddfcd;
   background-color: #1a1a1a;
   --appwin--bg-color-rgb: 255, 255, 255;
   --appwin--bg-color-opacity: 0.1;
+  --appwin--bg-color-rgb-hover: 255, 255, 255;
+  --appwin--bg-color-opacity-hover: 0.5;
   --appwin--border-color-rgb: 255, 255, 255;
   --appwin--border-color-opacity: 0.1;
   --appwin--color-hover: #333;
@@ -273,7 +278,7 @@ body.default .layout-footer{
   background-color: #e8e7e3;
 }
 
-/**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色*/
+/**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色 */
 body.dark .app-win{
   color: #d4d4d4;
 }
