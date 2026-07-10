@@ -326,7 +326,7 @@ const messageEventListener = (event: MessageEvent) => {
 const readListStorage = ref({});
 watch(() => readListStorage.value, (newRow: any) => {
   const listValue = localStorage.getItem(`readList`) || ``;
-  let value;
+  let value: any = [];
   try {
     value = JSON.parse(listValue);
   } catch (error) {
@@ -334,15 +334,13 @@ watch(() => readListStorage.value, (newRow: any) => {
   }
 
   if(value.length > 0){
-    let isEx = false;
-    value.map((item: any, index: number) => {
-      if(item.folder === newRow.folder){
-        isEx = true;
-        value[index] = newRow
-      }
-      return item
-    })
-    if(!isEx){
+    const targetIndex = value.findIndex((item: any) => item.folder === newRow.folder);
+    if(targetIndex !== -1){
+      value = [
+        newRow, 
+        ...value.filter((_: any, index: any) => index !== targetIndex)
+      ];
+    } else {
       value.unshift(newRow)
     }
   } else {
