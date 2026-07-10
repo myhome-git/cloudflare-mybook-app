@@ -206,29 +206,27 @@ onUnmounted(() => {
 }
 </style>
 <style>
-body .app-win{
-  color: #999;
-  --appwin--bg-color-rgb: 253, 252, 248;
-  --appwin--bg-color-opacity: 0.2;
-  --appwin--border-color-rgb: 204, 204, 204;
-  --appwin--border-color-opacity: 0.35;
-}
-body .layout-nav{
-  color: #666;
-}
 body.default .app-win{
   background-color: #fdfcf8;
-  --appwin--bg-color-rgb: 238, 238, 238;
+  --appwin--bg-color-rgb: 232, 231, 227;
+  --appwin--bg-color-rgb-hover: 0, 0, 0;
+  --appwin--bg-color-opacity-hover: 0.2;
+  --appwin--border-color-rgb: 238, 238, 238;
+  --appwin--border-color-opacity: 1;
+  --appwin--color-hover: #333;
 }
 body.green .app-win{
   background-color: #cddfcd;
   --appwin--bg-color-rgb: 129, 169, 129;
   --appwin--border-color-rgb: 129, 169, 129;
+  --appwin--color-hover: #164e16;
 }
 body.blue .app-win{
   background-color: #cfdde1;
   --appwin--bg-color-rgb: 151, 180, 189;
+  --appwin--bg-color-rgb-hover: 255, 255, 255;
   --appwin--border-color-rgb: 151, 180, 189;
+  --appwin--color-hover: #104252;
 }
 body.pink .app-win{
   background-color: #ebcece;
@@ -246,16 +244,25 @@ body.sepia .app-win{
   --appwin--border-color-rgb: 185, 172, 145;
 }
 body.dark .app-win{
+  color: #cddfcd;
   background-color: #1a1a1a;
   --appwin--bg-color-rgb: 255, 255, 255;
   --appwin--bg-color-opacity: 0.1;
   --appwin--border-color-rgb: 255, 255, 255;
   --appwin--border-color-opacity: 0.1;
-  color: #cddfcd;
+  --appwin--color-hover: #333;
 }
 
-body.default .app-win, body.green .app-win, body.blue .app-win, body.pink .app-win, body.gray .app-win, body.sepia .app-win{
+body.default, body.green, body.blue, body.pink , body.gray, body.sepia{
   color: #333;
+  --appwin--bg-color-rgb: 253, 252, 248;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--border-color-rgb: 204, 204, 204;
+  --appwin--border-color-opacity: 0.35;
+}
+body.green, body.blue, body.pink, body.gray, body.sepia{
+  --appwin--bg-color-rgb-hover: 255, 255, 255;
+  --appwin--bg-color-opacity-hover: 0.5;
 }
 
 /*默认模式*/

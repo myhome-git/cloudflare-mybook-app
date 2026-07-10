@@ -56,17 +56,18 @@ onMounted(() => {
   border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 .novel-list > .h1{
-  padding: 16px 20px;
+  padding: 12px 20px;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
-  color: #333;
   font-size: 120%;
   font-weight: bold;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 .no-data {
   padding: 20px;
 }
 .novel-list-item {
-  background-color: transparent;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -76,7 +77,8 @@ onMounted(() => {
 }
 
 .novel-list-item:hover {
-  background-color: #f6f8fa;
+  background-color: rgba(var(--appwin--bg-color-rgb-hover), var(--appwin--bg-color-opacity-hover));
+  color: var(--appwin--color-hover);
 }
 
 @media screen and (min-width: 768px) {
@@ -91,24 +93,10 @@ onMounted(() => {
     text-align: left; /* 确保文字左对齐 */
   }
 }
+body.default .novel-list > .h1{
+  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+}
 body.dark .novel-list{
   background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
-  color: #777;
-}
-body.default .novel-list, 
-body.green .novel-list, 
-body.blue .novel-list, 
-body.pink .novel-list, 
-body.gray .novel-list, 
-body.sepia .novel-list{
-  color: #666;
-}
-body.default .novel-list-item, 
-body.green .novel-list-item, 
-body.blue .novel-list-item, 
-body.pink .novel-list-item, 
-body.gray .novel-list-item, 
-body.sepia .novel-list-item{
-  color: #666;
 }
 </style>

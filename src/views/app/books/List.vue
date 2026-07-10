@@ -103,11 +103,13 @@ const onChange = (current: number, pageSize: number) => {
   border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 .novel-list > .h1{
-  padding: 16px 20px;
+  padding: 12px 20px;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
-  color: #333;
   font-size: 120%;
   font-weight: bold;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
 
 .novel-list-item {
@@ -128,7 +130,9 @@ const onChange = (current: number, pageSize: number) => {
 }
 
 .novel-list-item:hover {
-  background-color: #f6f8fa;
+  background-color: rgba(var(--appwin--bg-color-rgb-hover), var(--appwin--bg-color-opacity-hover));
+  color: var(--appwin--color-hover);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .novel-list-dot {
@@ -180,27 +184,11 @@ const onChange = (current: number, pageSize: number) => {
     text-align: left; /* 确保文字左对齐 */
   }
 }
+body.default .h1{
+  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+}
 body.dark .novel-list-container{
   background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
-  color: #777;
-}
-body.dark .novel-list-item-title{
   color: #999;
-}
-body.default .novel-list, 
-body.green .novel-list, 
-body.blue .novel-list, 
-body.pink .novel-list, 
-body.gray .novel-list, 
-body.sepia .novel-list{
-  color: #999;
-}
-body.default .novel-list-item-title, 
-body.green .novel-list-item-title, 
-body.blue .novel-list-item-title, 
-body.pink .novel-list-item-title, 
-body.gray .novel-list-item-title, 
-body.sepia .novel-list-item-title{
-  color: #333;
 }
 </style>
