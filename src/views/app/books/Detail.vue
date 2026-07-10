@@ -157,7 +157,7 @@ const startReading = () => {
 
 // 跳转到章节
 const goToChapter = (id: string) => {
-  handleItemClick({ file_path: file_path.value, folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false);
+  handleItemClick({ file_path: file_path.value, folder: folder.value, folder_index: folder_index.value, id }, `/app/books/read`, router, false, false, true);
 };
 
 // 挂载事件

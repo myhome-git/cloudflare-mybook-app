@@ -280,7 +280,7 @@ export const handleDecodemultiple = (obj: any, key: string, fieles: Array<string
 }
 
 // 处理列表项点击事件
-export const handleItemClick = (obj: any, url: string, router: any, mergeQuery: boolean = true, openInNewWindow: boolean = false) => {
+export const handleItemClick = (obj: any, url: string, router: any, mergeQuery: boolean = true, openInNewWindow: boolean = false, refresh:boolean = false) => {
     // 获取当前路由的查询参数
     const currentQuery = router.currentRoute.value.query;
     // console.log(`当前路由对象`, router.currentRoute.value);
@@ -312,9 +312,14 @@ export const handleItemClick = (obj: any, url: string, router: any, mergeQuery: 
         window.open(fullUrl, '_blank');
     } else {
         // 使用 Vue Router 进行导航
-        router.push({
-            path: url || router.currentRoute.value.path,
-            query: query
-        });
+        if(refresh){
+            const queryString = new URLSearchParams(query).toString();
+            location.href = `${url}?${queryString}`
+        } else {
+            router.push({
+                path: url || router.currentRoute.value.path,
+                query: query
+            });
+        }
     }
 };
