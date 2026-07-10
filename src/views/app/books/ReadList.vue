@@ -2,16 +2,21 @@
   <!-- 近期阅读 -->
   <div class="novel-list">
     <div class="h1">近期阅读</div>
-    <div v-for="novel in readListStorage" 
-      :key="novel.folder"
-      class="novel-list-item"
-      @click="handleItemClickDetail(novel)"
-    >
-      <div>{{ novel.title }}</div>
-      <div>{{ novel.name }}</div>
-      <div>{{ novel.author }}</div>
-      <div width="1">共 {{ novel.total_chapters }} 章</div>
-    </div>
+    <template v-if="readListStorage && readListStorage.length>0">
+      <div v-for="novel in readListStorage" 
+        :key="novel.folder"
+        class="novel-list-item"
+        @click="handleItemClickDetail(novel)"
+      >
+        <div>{{ novel.title }}</div>
+        <div>{{ novel.name }}</div>
+        <div>{{ novel.author }}</div>
+        <div width="1">共 {{ novel.total_chapters }} 章</div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="no-data"><span>暂无章节</span></div>
+    </template>
   </div>
 </template>
 
@@ -57,7 +62,9 @@ onMounted(() => {
   font-size: 120%;
   font-weight: bold;
 }
-
+.no-data {
+  padding: 20px;
+}
 .novel-list-item {
   background-color: transparent;
   padding: 10px 20px;
