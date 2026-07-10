@@ -1,7 +1,7 @@
 <template>
   <!-- 近期阅读 -->
   <div class="novel-list">
-    <div class="h1">近期阅读</div>
+    <div class="h1">阅读记录</div>
     <template v-if="readListStorage && readListStorage.length>0">
       <div v-for="novel in readListStorage" 
         :key="novel.folder"
@@ -37,7 +37,7 @@ const handleItemClickDetail = (novel: any) => {
 onMounted(() => {
   try {
     const list = JSON.parse(localStorage.getItem(`readList`) || ``);
-    readListStorage.value.push(...list)
+    readListStorage.value.push(...list);
   } catch (error) {
     
   }
@@ -70,7 +70,7 @@ onMounted(() => {
 .novel-list-item {
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  /* transition: background-color 0.2s; */
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));

@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<{
 
 // 处理列表项点击事件
 const handleItemClickDetail = (novel: any) => {
-  handleItemClick({ id: novel.id, file_path: novel.file_path, folder: novel.folder, folder_index: novel.folder_index }, `/app/books/detail`, router, false, false);
+  handleItemClick({ id: novel.id, file_path: novel.file_path, folder: novel.folder, folder_index: novel.folder_index }, `/app/books/detail`, router, false, true);
 };
 
 // 计算属性，用于处理 dataSource
@@ -116,7 +116,7 @@ const onChange = (current: number, pageSize: number) => {
   background-color: transparent;
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  /* transition: background-color 0.2s; */
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));

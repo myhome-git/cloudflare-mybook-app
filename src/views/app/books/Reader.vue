@@ -328,7 +328,7 @@ watch(() => readListStorage.value, (newRow: any) => {
   const listValue = localStorage.getItem(`readList`) || ``;
   let value;
   try {
-    value = JSON.parse(listValue)
+    value = JSON.parse(listValue);
   } catch (error) {
     value = [];
   }
@@ -348,6 +348,7 @@ watch(() => readListStorage.value, (newRow: any) => {
   } else {
     value.push(newRow)
   }
+  value = value.slice(0, 4);
   localStorage.setItem(`readList`, JSON.stringify(value));
 },{ deep: true });
 
@@ -457,8 +458,9 @@ watch(() => route.query.id, async (newId) => {
 }
 
 .chapter-nav-btn:hover {
-  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+  background-color: rgba(var(--appwin--bg-color-rgb-hover), var(--appwin--bg-color-opacity-hover));
   border-color: rgba(var(--appwin--border-color-rgb), 1);
+  color: var(--appwin--color-hover);
 }
 
 /* ==================== 

@@ -218,33 +218,37 @@ body.default .app-win{
 body.green .app-win{
   background-color: #cddfcd;
   --appwin--bg-color-rgb: 129, 169, 129;
+  --appwin--bg-color-rgb-hover: 22, 78, 22;
   --appwin--border-color-rgb: 129, 169, 129;
-  --appwin--color-hover: #164e16;
+  --appwin--color-hover: #ffffff;
 }
 body.blue .app-win{
   background-color: #cfdde1;
   --appwin--bg-color-rgb: 151, 180, 189;
-  --appwin--bg-color-rgb-hover: 255, 255, 255;
+  --appwin--bg-color-rgb-hover: 16, 66, 82;
   --appwin--border-color-rgb: 151, 180, 189;
-  --appwin--color-hover: #104252;
+  --appwin--color-hover: #ffffff;
 }
 body.pink .app-win{
   background-color: #ebcece;
   --appwin--bg-color-rgb: 193, 153, 153;
+  --appwin--bg-color-rgb-hover: 116, 59, 59;
   --appwin--border-color-rgb: 193, 153, 153;
-  --appwin--color-hover: #743b3b;
+  --appwin--color-hover: #ffffff;
 }
 body.gray .app-win{
   background-color: #d0d0d0;
   --appwin--bg-color-rgb: 151, 151, 151;
+  --appwin--bg-color-rgb-hover: 61, 61, 61;
   --appwin--border-color-rgb: 151, 151, 151;
-  --appwin--color-hover: #3e3d3d;
+  --appwin--color-hover: #ffffff;
 }
 body.sepia .app-win{
   background-color: #ede7da;
   --appwin--bg-color-rgb: 185, 172, 145;
+  --appwin--bg-color-rgb-hover: 70, 57, 31;
   --appwin--border-color-rgb: 185, 172, 145;
-  --appwin--color-hover: #46391f;
+  --appwin--color-hover: #ffffff;
 }
 body.dark .app-win{
   color: #cddfcd;

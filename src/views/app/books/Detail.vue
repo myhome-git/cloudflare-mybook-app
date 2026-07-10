@@ -334,7 +334,7 @@ function scheduleChunkedRender(queue: any, chunkSize = 50) {
   padding: 12px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
+  /* transition: all 0.2s; */
   font-size: 14px;
   margin-bottom: 8px;
   line-height: 1.5;
@@ -345,8 +345,8 @@ function scheduleChunkedRender(queue: any, chunkSize = 50) {
 }
 
 .chapter-item:hover {
-  background: #e8e7e3;
-  color: #333;
+  background-color: rgba(var(--appwin--bg-color-rgb-hover), var(--appwin--bg-color-opacity-hover));
+  color: var(--appwin--color-hover);
 }
 
 .chapter-item.active {
