@@ -3,7 +3,7 @@
     <ReadList></ReadList>
     <!-- 小说列表 - Markdown 风格列表 -->
     <div class="novel-list">
-      <div class="h1">列表</div>
+      <div class="h1">全部列表</div>
       <div 
         v-for="novel in props.dataSource" 
         :key="novel.id"
