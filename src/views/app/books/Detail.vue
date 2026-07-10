@@ -1,4 +1,6 @@
 <template>
+  <ReadList></ReadList>
+  <div style="height: 24px;"></div>
   <div class="novel-detail-container">
     <!-- 小说详情内容 -->
     <template v-if="novelData">
@@ -80,6 +82,7 @@ import { useRouter, useRoute } from 'vue-router';
 // @ts-ignore
 import request from "@/utils/request.js";
 import { isValidValue, handleItemClick } from "@/utils/utils.js";
+import ReadList from "./ReadList.vue";
 
 const router = useRouter();
 const route = useRoute();

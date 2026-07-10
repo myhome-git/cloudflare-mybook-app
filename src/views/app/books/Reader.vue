@@ -87,7 +87,7 @@ import {
 } from '@ant-design/icons-vue';
 // @ts-ignore
 import request from "@/utils/request.js";
-import { isValidValue, handleItemClick } from "@/utils/utils.js";
+import { isValidValue, handleItemClick, getCurrentDate } from "@/utils/utils.js";
 import ReaderSetting from './ReaderSetting.vue';
 
 const router = useRouter();
@@ -140,7 +140,10 @@ const fileURL = ref(``)
 const file_path = ref(``)
 const folder = ref(``)
 const folder_index = ref(``)
+const bookId = ref(``)
+const bookTitle = ref(``)
 const chapterId = ref(``)
+const chapterName = ref(``)
 
 // 数据源
 const apiURL = `/api/app/books/detail`;
@@ -183,6 +186,7 @@ const handleGetBookChapters = async () => {
 
         // 作者
         author.value = catalogData.author;
+        bookTitle.value = catalogData.title;
 
         // 清空并填充章节列表
         chapters.value = [];
@@ -198,6 +202,7 @@ const handleGetBookChapters = async () => {
         
         // 查找当前章节在列表中的位置
         const currentIndex = chapters.value.findIndex((ch: any) => ch.id === chapterId.value);
+        const currentChapter = chapters.value[currentIndex];
         
         // 设置前后章节
         if (currentIndex > 0) {
@@ -210,6 +215,19 @@ const handleGetBookChapters = async () => {
             nextChapterId.value = chapters.value[currentIndex + 1].id;
         } else {
             nextChapterId.value = '';
+        }
+
+        if(currentChapter){
+          readListStorage.value = {
+            author: author.value,
+            title: bookTitle.value,
+            id: currentChapter.id,
+            name: currentChapter.name,
+            folder: folder.value,
+            folder_index: folder_index.value,
+            total_chapters: chapters.value.length,
+            read_time: getCurrentDate()
+          }
         }
         
         // 再获取当前章节内容
@@ -303,6 +321,35 @@ const messageEventListener = (event: MessageEvent) => {
     readerSettings.value.fontSize = event.data.fontSize;
   }
 };
+
+// 章节阅读列表保存到本地
+const readListStorage = ref({});
+watch(() => readListStorage.value, (newRow: any) => {
+  const listValue = localStorage.getItem(`readList`) || ``;
+  let value;
+  try {
+    value = JSON.parse(listValue)
+  } catch (error) {
+    value = [];
+  }
+
+  if(value.length > 0){
+    let isEx = false;
+    value.map((item: any, index: number) => {
+      if(item.folder === newRow.folder){
+        isEx = true;
+        value[index] = newRow
+      }
+      return item
+    })
+    if(!isEx){
+      value.unshift(newRow)
+    }
+  } else {
+    value.push(newRow)
+  }
+  localStorage.setItem(`readList`, JSON.stringify(value));
+},{ deep: true });
 
 onMounted(() => {
   file_path.value = `${route.query.file_path}`;

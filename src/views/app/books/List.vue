@@ -1,7 +1,9 @@
 <template>
   <div class="novel-list-container">
+    <ReadList></ReadList>
     <!-- 小说列表 - Markdown 风格列表 -->
     <div class="novel-list">
+      <div class="h1">列表</div>
       <div 
         v-for="novel in props.dataSource" 
         :key="novel.id"
@@ -42,6 +44,7 @@
 import { computed } from "vue";
 import { useRouter } from 'vue-router';
 import { handleItemClick } from '@/utils/utils';
+import ReadList from "./ReadList.vue";
 
 const router = useRouter();
 
@@ -84,17 +87,27 @@ const onChange = (current: number, pageSize: number) => {
 
 <style scoped>
 .novel-list-container {
-  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  /* background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity)); */
   margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* 小说列表 - Markdown 风格 */
 .novel-list {
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-radius: 6px;
-  padding: 8px 0;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
+}
+.novel-list > .h1{
+  padding: 16px 20px;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: #333;
+  font-size: 120%;
+  font-weight: bold;
 }
 
 .novel-list-item {
