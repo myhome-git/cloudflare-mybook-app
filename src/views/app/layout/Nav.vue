@@ -100,7 +100,7 @@ const goHome = () => {
     height: 16px;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
+    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity)));
 }
 
 .app-nav .li:first-child::before {

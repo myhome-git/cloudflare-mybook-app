@@ -68,7 +68,7 @@ onMounted(() => {
   padding: 20px;
 }
 .novel-list-item {
-  padding: 10px 20px;
+  padding: 20px 20px;
   cursor: pointer;
   /* transition: background-color 0.2s; */
   border-bottom-width: 1px;

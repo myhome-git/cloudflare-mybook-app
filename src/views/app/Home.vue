@@ -143,8 +143,9 @@ onUnmounted(() => {
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: auto;
+    --appwin--bg-color-opacity: 0.2;
     --appwin--bg-color-opacity-hover: 0.2;
-    --appwin--border-color-opacity: 1;
+    --appwin--border-color-opacity: 0.5;
 }
 
 .x-container {
@@ -165,7 +166,7 @@ onUnmounted(() => {
 }
 
 .layout-nav {
-    background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 0.2));
+    background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 0.3));
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
@@ -210,12 +211,12 @@ onUnmounted(() => {
 <style>
 body.default .app-win{
   background-color: #cddfcd;
-  --appwin--bg-color-opacity-hover: 0.5;
-  --appwin--border-color-opacity: 0.5;
   --appwin--bg-color-rgb: 129, 169, 129;
   --appwin--bg-color-rgb-hover: 22, 78, 22;
   --appwin--border-color-rgb: 129, 169, 129;
   --appwin--color-hover: #ffffff;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-opacity: 0.5;
 }
 body.green .app-win{
   background-color: #cddfcd;
