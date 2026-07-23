@@ -77,7 +77,7 @@ const goHome = () => {
     top: 0;
     border-left-width: 1px;
     border-left-style: solid;
-    border-left-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
+    border-left-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity)));
 }
 .app-nav::after {
     display: block;
@@ -88,7 +88,7 @@ const goHome = () => {
     top: 0;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity) + 0.2));
+    border-right-color: rgba(var(--appwin--border-color-rgb), calc(var(--appwin--border-color-opacity)));
 }
 .app-nav .li::after {
     display: block;
@@ -172,6 +172,16 @@ const goHome = () => {
 }
 </style>
 <style>
+body.Ivory .app-nav::before {
+    display: block;
+    content: '';
+    border-left-color: rgba(var(--appwin--border-color-rgb), 0.2);
+}
+body.Ivory .app-nav::after {
+    display: block;
+    content: '';
+    border-right-color: rgba(var(--appwin--bg-color-rgb), 0.2);
+}
 body.dark .app-nav::before {
     display: block;
     content: '';

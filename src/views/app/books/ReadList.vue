@@ -36,7 +36,7 @@ const handleItemClickDetail = (novel: any) => {
 
 onMounted(() => {
   try {
-    const list = JSON.parse(localStorage.getItem(`readList`) || ``);
+    const list = JSON.parse(sessionStorage.getItem(`readList`) || ``);
     readListStorage.value.push(...list);
   } catch (error) {
     

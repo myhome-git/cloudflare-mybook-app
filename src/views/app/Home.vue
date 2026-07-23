@@ -90,13 +90,13 @@ const handleGetListNav = () => {
 // 主题设置
 const readerSettings = ref({
   theme: 'default',
-  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
+  fontSize: `${sessionStorage.getItem('readerFontSize') || '18px'}`,
   show: false
 });
 // 监听主题设置变化
 watch(() => readerSettings.value.theme, (newValue) => {
   document.body.className = newValue;
-  localStorage.setItem('readerTheme', newValue);
+  sessionStorage.setItem('readerTheme', newValue);
 });
 
 // 监听路由变化，重新获取所有数据
@@ -117,8 +117,8 @@ const messageEventListener = (event: MessageEvent) => {
 onMounted(async () => {
     // 使用 $nextTick 确保 DOM 已经渲染完成
     await nextTick(() => {
-        if(localStorage.getItem('readerTheme')){
-            readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
+        if(sessionStorage.getItem('readerTheme')){
+            readerSettings.value.theme = `${sessionStorage.getItem('readerTheme')}`;
         }
         handleGetListNav();
 
@@ -143,6 +143,8 @@ onUnmounted(() => {
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: auto;
+    --appwin--bg-color-opacity-hover: 0.2;
+    --appwin--border-color-opacity: 1;
 }
 
 .x-container {
@@ -207,13 +209,13 @@ onUnmounted(() => {
 </style>
 <style>
 body.default .app-win{
-  background-color: #fdfcf8;
-  --appwin--bg-color-rgb: 232, 231, 227;
-  --appwin--bg-color-rgb-hover: 0, 0, 0;
-  --appwin--bg-color-opacity-hover: 0.2;
-  --appwin--border-color-rgb: 238, 238, 238;
-  --appwin--border-color-opacity: 1;
-  --appwin--color-hover: #333;
+  background-color: #cddfcd;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-opacity: 0.5;
+  --appwin--bg-color-rgb: 129, 169, 129;
+  --appwin--bg-color-rgb-hover: 22, 78, 22;
+  --appwin--border-color-rgb: 129, 169, 129;
+  --appwin--color-hover: #ffffff;
 }
 body.green .app-win{
   background-color: #cddfcd;
@@ -235,6 +237,13 @@ body.pink .app-win{
   --appwin--bg-color-rgb-hover: 116, 59, 59;
   --appwin--border-color-rgb: 193, 153, 153;
   --appwin--color-hover: #ffffff;
+}
+body.Ivory .app-win{
+  background-color: #fdfcf8;
+  --appwin--bg-color-rgb: 232, 231, 227;
+  --appwin--bg-color-rgb-hover: 0, 0, 0;
+  --appwin--border-color-rgb: 200, 200, 200;
+  --appwin--color-hover: #333;
 }
 body.gray .app-win{
   background-color: #d0d0d0;
@@ -262,7 +271,7 @@ body.dark .app-win{
   --appwin--color-hover: #333;
 }
 
-body.default, body.green, body.blue, body.pink , body.gray, body.sepia{
+body.default, body.green, body.blue, body.pink, body.Ivory, body.gray, body.sepia{
   color: #333;
   --appwin--bg-color-rgb: 253, 252, 248;
   --appwin--bg-color-opacity: 0.2;
@@ -275,11 +284,11 @@ body.green, body.blue, body.pink, body.gray, body.sepia{
 }
 
 /*默认模式*/
-body.default .layout-nav{
-  background-color: #e8e7e3;
+body.Ivory .layout-nav{
+  background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 0.75));
 }
-body.default .layout-footer{
-  background-color: #e8e7e3;
+body.Ivory .layout-footer{
+  background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 0.5));
 }
 
 /**夜间模式样式，覆盖阅读器内容区域的背景色和文字颜色 */
@@ -292,6 +301,7 @@ body.dark .layout-nav{
 }
 body.dark .layout-footer{
   background-color: rgba(var(--appwin--bg-color-rgb), 0.05);
+  color: #666;
 }
 body.dark .reading-area{
   background-color: rgba(var(--appwin--bg-color-rgb), 0);

@@ -100,7 +100,7 @@ const loading = ref(false);
 // 主题设置
 const readerSettings = ref({
   theme: 'default',
-  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
+  fontSize: `${sessionStorage.getItem('readerFontSize') || '18px'}`,
   show: false
 });
 
@@ -325,7 +325,7 @@ const messageEventListener = (event: MessageEvent) => {
 // 章节阅读列表保存到本地
 const readListStorage = ref({});
 watch(() => readListStorage.value, (newRow: any) => {
-  const listValue = localStorage.getItem(`readList`) || ``;
+  const listValue = sessionStorage.getItem(`readList`) || ``;
   let value: any = [];
   try {
     value = JSON.parse(listValue);
@@ -347,7 +347,7 @@ watch(() => readListStorage.value, (newRow: any) => {
     value.push(newRow)
   }
   value = value.slice(0, 4);
-  localStorage.setItem(`readList`, JSON.stringify(value));
+  sessionStorage.setItem(`readList`, JSON.stringify(value));
 },{ deep: true });
 
 onMounted(() => {
@@ -395,6 +395,7 @@ watch(() => route.query.id, async (newId) => {
 .reading-area {
   padding: 20px;
   font-size: 20px;
+  border-radius: 8px;
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
   border-width: 1px;
   border-style: solid;

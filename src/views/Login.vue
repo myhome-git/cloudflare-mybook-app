@@ -52,7 +52,7 @@ interface FormState {
 }
 
 const formState = reactive<FormState>({
-  username: localStorage.getItem("remember") === 'true' ? `${localStorage.getItem("username")}` : '',
+  username: sessionStorage.getItem("remember") === 'true' ? `${sessionStorage.getItem("username")}` : '',
   password: '',
   remember: true,
 });
@@ -74,8 +74,8 @@ const onFinish = (values: any) => {
       sessionStorage.setItem("file_upload_max_size", result.file_upload_max_size);
       // 记住功能
       if (formState.remember) {
-        localStorage.setItem("username", result.username);
-        localStorage.setItem("remember", formState.remember.toString());
+        sessionStorage.setItem("username", result.username);
+        sessionStorage.setItem("remember", formState.remember.toString());
       }
       location.href = "/admin";
       // console.log(res);
