@@ -183,7 +183,7 @@ const onChange = (current: number, pageSize: number) => {
   }
 }
 body.default .h1{
-  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
 }
 body.dark .novel-list-container{
   background-color: rgba(var(--appwin--bg-color-rgb), 0.05);

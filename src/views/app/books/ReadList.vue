@@ -36,7 +36,7 @@ const handleItemClickDetail = (novel: any) => {
 
 onMounted(() => {
   try {
-    const list = JSON.parse(sessionStorage.getItem(`readList`) || ``);
+    const list = JSON.parse(localStorage.getItem(`readList`) || ``);
     readListStorage.value.push(...list);
   } catch (error) {
     
@@ -75,6 +75,9 @@ onMounted(() => {
   border-bottom-style: solid;
   border-bottom-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
 }
+.novel-list-item:last-child {
+  border-bottom-style: none;
+}
 
 .novel-list-item:hover {
   background-color: rgba(var(--appwin--bg-color-rgb-hover), var(--appwin--bg-color-opacity-hover));
@@ -93,8 +96,8 @@ onMounted(() => {
     text-align: left; /* 确保文字左对齐 */
   }
 }
-body.default .novel-list > .h1{
-  background-color: rgba(var(--appwin--bg-color-rgb), 1);
+body.default .h1{
+  background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity)));
 }
 body.dark .novel-list{
   background-color: rgba(var(--appwin--bg-color-rgb), 0.05);

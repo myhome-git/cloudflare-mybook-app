@@ -75,8 +75,8 @@ const route = useRoute();
 
 // 阅读器设置
 const readerSettings = ref({
-  theme: `${ sessionStorage.getItem('readerTheme') || 'default'}`,
-  fontSize: `${sessionStorage.getItem('readerFontSize') || '18px'}`
+  theme: `${ localStorage.getItem('readerTheme') || 'default'}`,
+  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`
 });
 
 // 主题设置变化
@@ -90,7 +90,7 @@ const handleFontSizeChange = (e: any) => {
 // 监听主题变化
 watch(() => readerSettings.value.theme, (newValue) => {
   document.body.className = newValue;
-  sessionStorage.setItem('readerTheme', newValue);
+  localStorage.setItem('readerTheme', newValue);
   window.parent.postMessage(
     {
       type: 'themeChange',
@@ -102,7 +102,7 @@ watch(() => readerSettings.value.theme, (newValue) => {
 // 监听字体大小变化
 watch(() => readerSettings.value.fontSize, (newValue) => {
   document.body.style.fontSize = newValue;
-  sessionStorage.setItem('readerFontSize', newValue);
+  localStorage.setItem('readerFontSize', newValue);
   // 发送消息给父组件，通知字体大小变化
   window.parent.postMessage(
     {

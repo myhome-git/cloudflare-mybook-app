@@ -90,13 +90,13 @@ const handleGetListNav = () => {
 // 主题设置
 const readerSettings = ref({
   theme: 'default',
-  fontSize: `${sessionStorage.getItem('readerFontSize') || '18px'}`,
+  fontSize: `${localStorage.getItem('readerFontSize') || '18px'}`,
   show: false
 });
 // 监听主题设置变化
 watch(() => readerSettings.value.theme, (newValue) => {
   document.body.className = newValue;
-  sessionStorage.setItem('readerTheme', newValue);
+  localStorage.setItem('readerTheme', newValue);
 });
 
 // 监听路由变化，重新获取所有数据
@@ -117,8 +117,8 @@ const messageEventListener = (event: MessageEvent) => {
 onMounted(async () => {
     // 使用 $nextTick 确保 DOM 已经渲染完成
     await nextTick(() => {
-        if(sessionStorage.getItem('readerTheme')){
-            readerSettings.value.theme = `${sessionStorage.getItem('readerTheme')}`;
+        if(localStorage.getItem('readerTheme')){
+            readerSettings.value.theme = `${localStorage.getItem('readerTheme')}`;
         }
         handleGetListNav();
 
