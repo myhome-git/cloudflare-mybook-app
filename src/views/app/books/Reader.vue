@@ -173,17 +173,16 @@ const handleGetBookChapters = async () => {
     isServerResultValue.status = 100;
     isServerResultValue.message = 'Loading...';
     try {
-      
-        // 截取前四位为目录，例如：d41d8cd98f00b204e9800998ecf8427e,会变成d1/1d/d41d8cd98f00b204e9800998ecf8427e
-        let tempFolder = folder.value
+        // 截取前四位为目录
+        let firstFolder: any = [];
         const regex = /^([a-f0-9]{2})([a-f0-9]{2})/i;
-        const match = tempFolder.match(regex);
+        const match = folder.value.match(regex);
         if(match){
-          tempFolder = `${match[1]}/${match[2]}/${folder.value}`
+          firstFolder = [match[1], match[2]]
         }
 
         // 先获取章节目录列表
-        const catalogUrl = [fileURL.value, tempFolder, folder_index.value].join('/');
+        const catalogUrl = [fileURL.value, ...firstFolder, folder.value, folder_index.value].join('/');
         const catalogResponse = await fetch(catalogUrl);
         
         if (!catalogResponse.ok) {
@@ -240,7 +239,7 @@ const handleGetBookChapters = async () => {
         }
         
         // 再获取当前章节内容
-        const chapterUrl = [fileURL.value, tempFolder, `${chapterId.value}.txt.gz`].join('/');
+        const chapterUrl = [fileURL.value, ...firstFolder, folder.value, `${chapterId.value}.txt.gz`].join('/');
         const chapterResponse = await fetch(chapterUrl);
         
         if (!chapterResponse.ok) {

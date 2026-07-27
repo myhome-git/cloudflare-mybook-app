@@ -123,8 +123,17 @@ const handleGetBookChapters = (options: { url: string; folder: string; folder_in
     isServerResultValue.status = 0;
     isServerResultValue.message = 'Loading...';
     let sendParams = Object.assign({});
+
+    // 截取前四位为目录
+    let firstFolder: any = [];
+    const regex = /^([a-f0-9]{2})([a-f0-9]{2})/i;
+    const match = options.folder.match(regex);
+    if(match){
+      firstFolder = [match[1], match[2]]
+    }
+
     request({
-        url: [options.url, options.folder, options.folder_index].join('/'),
+        url: [options.url, ...firstFolder, options.folder, options.folder_index].join('/'),
         params: sendParams
     }).then((data: any) => {
         isServerResultValue.status = 200;
