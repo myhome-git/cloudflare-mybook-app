@@ -1,7 +1,5 @@
 <template>
-    <div class="app-win">
-        <input id="keyboard-focus-input" type="text" 
-         style="position: absolute; opacity: 0; width: 0; height: 0; border: none;" />
+    <div class="app-win" id="app-win">
         <link rel="stylesheet" href="//at.alicdn.com/t/font_1281105_ue0q9rvh0lb.css">
             <div class="x-container">
                 <Header @onSearch="onSearch"></Header>

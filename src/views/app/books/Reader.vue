@@ -1,5 +1,5 @@
 <template>
-  <div class="reader-container" :class="readerSettings.theme">
+  <div class="reader-container" :class="readerSettings.theme" id="reader-container">
     <!-- 阅读器内容区域 -->
     <div class="reader-content">
       <!-- 章节导航 -->
@@ -373,9 +373,6 @@ const onkeydown = (evt: any) => {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    window.scrollTo(0, 0);
-})
 onMounted(() => {
   file_path.value = `${route.query.file_path}`;
   folder.value = `${route.query.folder}`
@@ -386,7 +383,7 @@ onMounted(() => {
   document.addEventListener('keydown', onkeydown);
   window.addEventListener('message', messageEventListener);
 
-  const fixedDiv = document.getElementById('keyboard-focus-input');
+  const fixedDiv = document.getElementById('reader-container');
   if (fixedDiv) {
     fixedDiv.tabIndex = 0; // 确保它可以被聚焦
     fixedDiv.focus();
@@ -413,6 +410,7 @@ watch(() => route.query.id, async (newId) => {
 .reader-container {
   min-height: 100vh;
   transition: all 0.3s;
+  outline: none;
 }
 .reader-container .load-msg{
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
