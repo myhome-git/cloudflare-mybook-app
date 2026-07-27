@@ -371,9 +371,6 @@ const onkeydown = (evt: any) => {
     else if (key == 39) {
       goToChapter(nextChapterId.value)
     }
-    else if(key == 36){
-      goToChapters()
-    }
 }
 
 
