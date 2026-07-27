@@ -380,8 +380,15 @@ onMounted(() => {
   folder_index.value = `${route.query.folder_index}`;
   chapterId.value = `${route.query.id}`;
   handleGetURL()
-  window.addEventListener('message', messageEventListener);
+  
   document.addEventListener('keydown', onkeydown);
+  window.addEventListener('message', messageEventListener);
+  window.addEventListener('load', () => {
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+    document.body.tabIndex = 0;
+    document.body.focus();
+  })
 });
 
 onUnmounted(() => {
