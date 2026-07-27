@@ -375,8 +375,6 @@ const onkeydown = (evt: any) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
-    document.body.tabIndex = 0;
-    document.body.focus();
 })
 onMounted(() => {
   file_path.value = `${route.query.file_path}`;
@@ -387,6 +385,12 @@ onMounted(() => {
   
   document.addEventListener('keydown', onkeydown);
   window.addEventListener('message', messageEventListener);
+
+  const fixedDiv = document.getElementById('keyboard-focus-input');
+  if (fixedDiv) {
+    fixedDiv.tabIndex = 0; // 确保它可以被聚焦
+    fixedDiv.focus();
+  }
 });
 
 onUnmounted(() => {
