@@ -358,6 +358,25 @@ watch(() => readListStorage.value, (newRow: any) => {
   localStorage.setItem(`readList`, JSON.stringify(value));
 },{ deep: true });
 
+// 监听键盘事件，自动跳转上一章、下一章
+const onkeydown = (evt: any) => {
+  evt = evt || window.event;
+    var key = evt.which || evt.keyCode;
+
+    // 监听左方向键 (37) 跳转上一章
+    if (key == 37 || key == 33) {
+      goToChapter(prevChapterId.value);
+    } 
+    // 监听右方向键 (39) 跳转下一章
+    else if (key == 39 || key == 34) {
+      goToChapter(nextChapterId.value)
+    }
+    else if(key == 36){
+      goToChapters()
+    }
+}
+
+
 onMounted(() => {
   file_path.value = `${route.query.file_path}`;
   folder.value = `${route.query.folder}`
@@ -365,10 +384,12 @@ onMounted(() => {
   chapterId.value = `${route.query.id}`;
   handleGetURL()
   window.addEventListener('message', messageEventListener);
+  window.addEventListener('keydown', onkeydown);
 });
 
 onUnmounted(() => {
   window.removeEventListener('message', messageEventListener);
+  window.removeEventListener('keydown', onkeydown);
 });
 
 // 监听章节 ID 变化，重新加载内容
