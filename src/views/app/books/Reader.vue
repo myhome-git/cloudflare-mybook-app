@@ -382,12 +382,6 @@ onMounted(() => {
   
   document.addEventListener('keydown', onkeydown);
   window.addEventListener('message', messageEventListener);
-
-  const fixedDiv = document.getElementById('app-win');
-  if (fixedDiv) {
-    fixedDiv.tabIndex = 0; // 确保它可以被聚焦
-    fixedDiv.focus();
-  }
 });
 
 onUnmounted(() => {
@@ -410,7 +404,6 @@ watch(() => route.query.id, async (newId) => {
 .reader-container {
   min-height: 100vh;
   transition: all 0.3s;
-  outline: none;
 }
 .reader-container .load-msg{
   background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));

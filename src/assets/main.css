@@ -13,3 +13,6 @@
 #app .body-row-selected>td:hover{
   background-color: inherit !important;
 }
+div{
+  outline: none;
+}
