@@ -383,7 +383,7 @@ onMounted(() => {
   document.addEventListener('keydown', onkeydown);
   window.addEventListener('message', messageEventListener);
 
-  const fixedDiv = document.getElementById('reader-container');
+  const fixedDiv = document.getElementById('app-win');
   if (fixedDiv) {
     fixedDiv.tabIndex = 0; // 确保它可以被聚焦
     fixedDiv.focus();
