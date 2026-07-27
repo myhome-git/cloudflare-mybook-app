@@ -364,11 +364,11 @@ const onkeydown = (evt: any) => {
     var key = evt.which || evt.keyCode;
 
     // 监听左方向键 (37) 跳转上一章
-    if (key == 37 || key == 33) {
+    if (key == 37) {
       goToChapter(prevChapterId.value);
     } 
     // 监听右方向键 (39) 跳转下一章
-    else if (key == 39 || key == 34) {
+    else if (key == 39) {
       goToChapter(nextChapterId.value)
     }
     else if(key == 36){
