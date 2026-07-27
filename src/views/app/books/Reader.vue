@@ -384,12 +384,12 @@ onMounted(() => {
   chapterId.value = `${route.query.id}`;
   handleGetURL()
   window.addEventListener('message', messageEventListener);
-  window.addEventListener('keydown', onkeydown);
+  document.addEventListener('keydown', onkeydown);
 });
 
 onUnmounted(() => {
   window.removeEventListener('message', messageEventListener);
-  window.removeEventListener('keydown', onkeydown);
+  document.removeEventListener('keydown', onkeydown);
 });
 
 // 监听章节 ID 变化，重新加载内容
